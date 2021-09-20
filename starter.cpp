@@ -271,5 +271,10 @@ int main(){
 	s.Sort(data, compDRNF);
 
 	
+	/*
+	QuickSort <Record> s;
+	s.Sort(data, compDRNF);
+	*/
+	
 	//data[0].imprimirRecord();
 }
