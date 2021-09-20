@@ -223,7 +223,7 @@ class QuickSort: public Sorter<T>{
 		int i=lo+1;
 		int j=hi;
 		while (true){
-			while((compDRNF(data[i],data[p]) < 1) && i < hi){
+			while(compDRNF(data[i],data[p]) < 1 && i < hi){
 				i++;
 			}
 			while(compDRNF(data[i],data[p]) == 1 &&j>lo){
@@ -240,7 +240,7 @@ class QuickSort: public Sorter<T>{
 		return j;
 	}
 };
-
+/*
 template <class T>
 class InsertSort: public Sorter<T>{
     public:
@@ -260,7 +260,7 @@ class InsertSort: public Sorter<T>{
             
         }
 };
-
+*/
 
 int main(){
 	cargarDatos(); 
