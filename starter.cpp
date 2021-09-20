@@ -200,11 +200,10 @@ int compDRNF(Record r1, Record r2){
 		return 1;
 	}
 }
-
 template <class T>
 class QuickSort: public Sorter<T>{
 	public:
-	void Sort(vector<T> &data, int comparador(T a, T b)){
+	void Sort(vector<T> &data){
 		SortAux(data, 0, data.size()-1);
 	}
 	
@@ -223,16 +222,15 @@ class QuickSort: public Sorter<T>{
 		int i=lo+1;
 		int j=hi;
 		while (true){
-			while(compDRNF(data[i],data[p]) < 1 && i < hi){
+			while(data[i]<=data[p] &&i<hi){
 				i++;
 			}
-			while(compDRNF(data[i],data[p]) == 1 &&j>lo){
+			while(data[j]>data[p]&&j>lo){
 				j--;
 			}
 			if(i<j){
 				this->Intercambiar(data, i,j);
-			}
-			else{
+			}else{
 				this->Intercambiar(data, p, j);
 				break;
 			}
@@ -240,31 +238,11 @@ class QuickSort: public Sorter<T>{
 		return j;
 	}
 };
-/*
-template <class T>
-class InsertSort: public Sorter<T>{
-    public:
-        void Sort(vector<T> &data, int comparador(T a, T b)){
-            for(int i=1; i < data.size(); i++){
-                for(int j=i; j > 0; j--){
-                    if(compDRNF(data[j-1], data[j]) == -1){
-                        this->Intercambiar(data, j-1, j);  
-                    }
-					else{
-                        break;
-                    }
-                    
-                }
-                
-            }
-            
-        }
-};
-*/
+
+
 
 int main(){
 	cargarDatos(); 
-	
 	QuickSort <Record> s;
 	s.Sort(data, compDRNF);
 	
@@ -272,12 +250,11 @@ int main(){
 	cout<<"samuel.reto.com se encuentra en la posicion: "<<pos<<endl;
 
 	
-	/*
 	
 	
-	InsertSort <Record> s;
-	s.Sort(data, compDRNF);
-	*/
+	
+	
+	
 	
 	//data[0].imprimirRecord();
 }
