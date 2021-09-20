@@ -200,7 +200,7 @@ int compDRNF(Record r1, Record r2){
 		return 1;
 	}
 }
-/*
+
 template <class T>
 class QuickSort: public Sorter<T>{
 	public:
@@ -223,7 +223,7 @@ class QuickSort: public Sorter<T>{
 		int i=lo+1;
 		int j=hi;
 		while (true){
-			while((compDRNF(data[i],data[p]) == -1 or compDRNF(data[i],data[p]) == 0) && i < hi){
+			while((compDRNF(data[i],data[p]) < 1) && i < hi){
 				i++;
 			}
 			while(compDRNF(data[i],data[p]) == 1 &&j>lo){
@@ -239,7 +239,7 @@ class QuickSort: public Sorter<T>{
 		}
 		return j;
 	}
-};*/
+};
 
 template <class T>
 class InsertSort: public Sorter<T>{
@@ -264,15 +264,18 @@ class InsertSort: public Sorter<T>{
 
 int main(){
 	cargarDatos(); 
-
+	
+	QuickSort <Record> s;
+	s.Sort(data, compDRNF);
+	
 	int pos = busquedaBinaria<Record, string>(data, "samuel.reto.com", compRNF);
 	cout<<"samuel.reto.com se encuentra en la posicion: "<<pos<<endl;
-	InsertSort <Record> s;
-	s.Sort(data, compDRNF);
 
 	
 	/*
-	QuickSort <Record> s;
+	
+	
+	InsertSort <Record> s;
 	s.Sort(data, compDRNF);
 	*/
 	
