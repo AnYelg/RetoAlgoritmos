@@ -4,8 +4,7 @@
 #include <vector>
 #include <sstream>
 using namespace std;
- 
-//Busqueda kulz 
+
 //Orden kulz
 
 class Record{
@@ -205,48 +204,8 @@ template <class T>
 class QuickSort: public Sorter<T>{
 	public:
 	void Sort(vector<T> &data, int comparador(T a, T b)){
-		SortAux(data, 0, data.size()-1);
-	}
-	
-	private:
-	void SortAux(vector<T> &data, int lo, int hi){
-		if(lo>=hi){
-			return;
-		}
-		int posOrdenado=Partition(data, lo, hi);
-		SortAux(data, lo, posOrdenado-1);
-		SortAux(data, posOrdenado+1, hi);
-	}
-	
-	int Partition(vector<T> &data, int lo, int hi){
-		int p=lo;
-		int i=lo+1;
-		int j=hi;
-		while (true){
-			while((compDRNF(data[i],data[p]) < 1) && i < hi){
-				i++;
-			}
-			while(compDRNF(data[i],data[p]) == 1 &&j>lo){
-				j--;
-			}
-			if(i<j){
-				this->Intercambiar(data, i,j);
-			}
-			else{
-				this->Intercambiar(data, p, j);
-				break;
-			}
-		}
-		return j;
-	}
-};
-/*
-template <class T>
-class QuickSort: public Sorter<T>{
-	public:
-	void Sort(vector<T> &data, int comparador(T a, T b)){
 
-		SortAux(data, 0, data.size()-1, comparador(T a, T b) );
+		SortAux(data, 0, data.size()-1, comparador);
 	}
 	
 	private:
@@ -254,9 +213,9 @@ class QuickSort: public Sorter<T>{
 		if(lo>=hi){
 			return;
 		}
-		int posOrdenado=Partition(data, lo, hi, comparador(T a, T b));
-		SortAux(data, lo, posOrdenado-1, comparador(T a, T b));
-		SortAux(data, posOrdenado+1, hi, comparador(T a, T b));
+		int posOrdenado=Partition(data, lo, hi, comparador);
+		SortAux(data, lo, posOrdenado-1, comparador);
+		SortAux(data, posOrdenado+1, hi, comparador);
 	}
 	
 	int Partition(vector<T> &data, int lo, int hi, int comparador(T a, T b)){
@@ -280,33 +239,13 @@ class QuickSort: public Sorter<T>{
 		return j;
 	}
 };
-*/
-template <class T>
-class SelectionSort: public Sorter<T>{
-	public:
-	void Sort(vector<T> &data, int comparador(T a, T b)){
-		for(int i=0; i<data.size()-1; i++){
-			int minimo=i;
-			for(int j=i+1; j<data.size(); j++){
-				if(comparador(data[j],data[minimo])==-1){
-					minimo=j;
-				}
-			}
-			this->Intercambiar(data, i, minimo);
-		}
-	}
-};
+
 
 
 int main(){
 	cargarDatos(); 
 	QuickSort <Record> s;
 	s.Sort(data, compDRNF);
-	//SelectionSort<Record> s;
-	//s.Sort(data, compDRNF);
-	for(int i=0; i<100; i++){
-		data[i].imprimirRecord();
-	}
 
 	int pos = busquedaBinaria<Record, string>(data, "samuel.reto.com", compRNF);
 	cout<<"samuel.reto.com se encuentra en la posicion: "<<pos<<endl;
