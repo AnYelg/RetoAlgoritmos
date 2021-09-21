@@ -44,6 +44,9 @@ class Record{
 	void imprimirRecord(){
 		cout << fecha << "__" << hora << ":" << ipFuente << ":" << puertoFuente << ":" << nombreFuente <<":" << ipDestino << ":" << puertoDestino << ":" << nombreDestino << endl;
 	}
+	void imprimirDestino(){
+		cout << puertoDestino << ":" <<fecha << "__" << hora << ":" << ipFuente << ":" << puertoFuente << ":" << nombreFuente <<":" << ipDestino <<  ":" << nombreDestino << endl;
+	}
 };
 
 template <class T>
@@ -272,6 +275,7 @@ int compDRpD(Record r1, Record r2){
 	}
 }
 
+
 template <class T>
 class QuickSort: public Sorter<T>{
 	public:
@@ -321,13 +325,26 @@ int main(){
 	cout << "Número de registros: " << data.size() << endl;
 	
 	cout << "***************************Pregunta 2***************************" << endl;
-	QuickSort <Record> d;
-	d.Sort(data, compDRF);
-
+	QuickSort <Record> aj;
+	aj.Sort(data, compDRF);
+	int i = 0;
+	while(i < data.size()){
+		if(data[i].fecha != data[0].fecha){
+			cout << "Información del segundo día, primer usuario: " << endl;
+			data[i].imprimirRecord();
+			break;
+		}
+		else{
+			i++;
+		}
+		
+	}
 
 	cout << "***************************Pregunta 3***************************" << endl;
-	QuickSort <Record> t;
-	t.Sort(data, compDRNF);
+	
+	aj.Sort(data, compDRNF);
+
+	cout << "Si como posición da -1, significa que no existe." << endl;
 
 	int posj = busquedaBinaria<Record, string>(data, "jeffrey.reto.com", compRNF);
 	cout<<"La computadora de Jeffrey esta en la posición: "<<posj<<endl;
@@ -351,22 +368,24 @@ int main(){
 	cout<<"La computadora de Raymond esta en la posición: "<<posr<<endl;
 	
 	cout << "***************************Pregunta 4***************************" << endl;
-	QuickSort <Record> c;
-	c.Sort(data, compDRipF);
-
-	for(int i = 0; i < 200; i++){
-		data[i].imprimirRecord();
-	}
+	aj.Sort(data, compDRipF);
+	cout << " La dirección de la red interna de la compañía es: "<< data[0].ipFuente << endl;
 	
 	cout << "***************************Pregunta 5***************************" << endl;
-	QuickSort <Record> ci;
-	ci.Sort(data, compDRNF); 
+	
+	aj.Sort(data, compDRNF); 
 	int posser = busquedaBinaria<Record, string>(data, "server.reto.com", compRNF);
-	cout<<"La computadora server.reto.com esta en la posición: "<<posser<<endl;
+	if (posser == -1){
+		cout<<"La computadora server.reto.com no se encuentra "<<endl;	
+	}
+	else {
+		cout << "Si se encuentra la computadora server.reto.com en la posición: "<< posser << endl;
+	}
 
 	cout << "***************************Pregunta 6***************************" << endl;
-	QuickSort <Record> s;
-	s.Sort(data, compDRNF);
+	
+	aj.Sort(data, compDRNF);
+	cout << "Si como posición da -1, significa que no existe." << endl;
 
 	int gm = busquedaBinaria<Record, string>(data, "gmail.com", compNDF);
 	cout << "El correo gmail.com se encuentra en la posición: "<<gm<<endl;
@@ -381,22 +400,19 @@ int main(){
 	cout << "El correo freemailserver.com se encuentra en la posición: "<<fre<<endl;
 
 	cout << "***************************Pregunta 7***************************" << endl;
-	QuickSort <Record> siete;
-	siete.Sort(data, compDRpD);
+	
+	aj.Sort(data, compDRpD);
 	
 	int num = busquedaBinaria<Record, int>(data, 1000, compPDF);
-	cout << data.size() << endl;
-	cout << num << endl;
-	cout << "Hay: " << data.size()-num << " puertos abajo del 1000 que  se están usando" << endl;
-
-	for(int i = num; i< data.size(); i++){
-		data[i].imprimirRecord();
+	cout << "Existen " << num << " usuarios usando puertos abajo del 1000." << endl;
+	
+	 
+	for(int i = num; i< data.size(); i--){
+		if (data[i].puertoDestino <= 1000 && data[i+1].puertoDestino != data[i].puertoDestino){
+			cout << "Número de Puerto Destino: " << data[i].puertoDestino << endl;	
+		}
+		
 	}
-
-	
-
-	
-	
 	
 	//data[0].imprimirRecord();
 }
