@@ -21,7 +21,7 @@ class Record{
 	Record(string f, string h, string ipF, string pF, string nF,string ipD, string pD, string nD){
 		this -> fecha = f;
         this -> hora = h;
-        this -> ipFuente = ipF; //CHECAAAAA
+        this -> ipFuente = ipF; 
         this -> nombreFuente = nF;
         this -> ipDestino = ipD;
         this -> nombreDestino = nD;
@@ -190,12 +190,84 @@ int busquedaBinaria (vector<T> a, B buscado, int comparador(T a, B b)){
     return -1;
 }
 
+int compDRF(Record r1, Record r2){
+	if(r1.fecha < r2.fecha){
+		return -1;
+	}else if (r1.fecha == r2.fecha){
+		return 0;
+	}else{
+		return 1;
+	}
+}
+
+int compDRipF(Record r1, Record r2){
+	if(r1.ipFuente < r2.ipFuente){
+		return -1;
+	}else if (r1.ipFuente == r2.ipFuente){
+		return 0;
+	}else{
+		return 1;
+	}
+}
+
+int compDRipF(Record r1, Record r2){
+	if(r1.puertoFuente < r2.puertoFuente){
+		return -1;
+	}else if (r1.puertoFuente == r2.puertoFuente){
+		return 0;
+	}else{
+		return 1;
+	}
+}
+
 int compDRNF(Record r1, Record r2){
 	if(r1.nombreFuente < r2.nombreFuente){
 		return -1;
 	}else if (r1.nombreFuente == r2.nombreFuente){
 		return 0;
 	}else{
+		return 1;
+	}
+}
+
+int compDRipD(Record r1, Record r2){
+	if(r1.ipDestino < r2.ipDestino){
+		return -1;
+	}
+
+	else if(r1.ipDestino == r2.ipDestino){
+		return 0;
+	}
+
+	else{
+		return 1;
+	}
+}
+
+int compDRnD(Record r1, Record r2){
+	if(r1.nombreDestino < r2.nombreDestino){
+		return -1;
+	}
+
+	else if(r1.nombreDestino == r2.nombreDestino){
+		return 0;
+	}
+
+	else{
+		return 1;
+	}
+}
+
+int compDRpD(Record r1, Record r2){
+	if(r1.puertoDestino < r2.puertoDestino){
+		return -1;
+	}
+
+	else if(r1.puertoDestino == r2.puertoDestino){
+		return 0;
+	}
+
+	else{
 		return 1;
 	}
 }
