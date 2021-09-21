@@ -298,7 +298,7 @@ class QuickSort: public Sorter<T>{
 			while(comparador(data[i], data[p]) < 1 &&i<hi){
 				i++;
 			}
-			while(comparador(data[j], data[p]) == -1 &&j>lo){
+			while(comparador(data[j], data[p]) == 1 &&j>lo){
 				j--;
 			}
 			if(i<j){
@@ -317,80 +317,84 @@ class QuickSort: public Sorter<T>{
 int main(){
 	cargarDatos(); 
 
-	//Pregunta 1
+	cout << "***************************Pregunta 1***************************" << endl;
 	cout << "Número de registros: " << data.size() << endl;
-	//Pregunta 2
-	QuickSort <Record> s;
-	s.Sort(data, compDRF);
+	
+	cout << "***************************Pregunta 2***************************" << endl;
+	QuickSort <Record> d;
+	d.Sort(data, compDRF);
 
-	for(int i = 0; i < 20; i++){
+
+	cout << "***************************Pregunta 3***************************" << endl;
+	QuickSort <Record> t;
+	t.Sort(data, compDRNF);
+
+	int posj = busquedaBinaria<Record, string>(data, "jeffrey.reto.com", compRNF);
+	cout<<"La computadora de Jeffrey esta en la posición: "<<posj<<endl;
+	
+	int posb = busquedaBinaria<Record, string>(data, "betty.reto.com", compRNF);
+	cout<<"La computadora de Betty esta en la posición: "<<posb<<endl;
+
+	int posk = busquedaBinaria<Record, string>(data, "katherine.reto.com", compRNF);
+	cout<<"La computadora de Katherine esta en la posición: "<<posk<<endl;
+
+	int poss = busquedaBinaria<Record, string>(data, "scott.reto.com", compRNF);
+	cout<<"La computadora de Scott esta en la posición: "<<poss<<endl;
+
+	int posbe = busquedaBinaria<Record, string>(data, "benjamin.reto.com", compRNF);
+	cout<<"La computadora de Benjamin esta en la posición: "<<posbe<<endl;
+
+	int possam = busquedaBinaria<Record, string>(data, "samuel.reto.com", compRNF);
+	cout<<"La computadora de Samuel esta en la posición: "<<possam<<endl;
+
+	int posr = busquedaBinaria<Record, string>(data, "raymond.reto.com", compRNF);
+	cout<<"La computadora de Raymond esta en la posición: "<<posr<<endl;
+	
+	cout << "***************************Pregunta 4***************************" << endl;
+	QuickSort <Record> c;
+	c.Sort(data, compDRipF);
+
+	for(int i = 0; i < 200; i++){
 		data[i].imprimirRecord();
 	}
+	
+	cout << "***************************Pregunta 5***************************" << endl;
+	QuickSort <Record> ci;
+	ci.Sort(data, compDRNF); 
+	int posser = busquedaBinaria<Record, string>(data, "server.reto.com", compRNF);
+	cout<<"La computadora server.reto.com esta en la posición: "<<posser<<endl;
 
-	//Pregunta 3
+	cout << "***************************Pregunta 6***************************" << endl;
 	QuickSort <Record> s;
 	s.Sort(data, compDRNF);
 
-	int pos = busquedaBinaria<Record, string>(data, "jeffrey.reto.com", compRNF);
-	cout<<"La computadora de Jeffrey esta en la posición: "<<pos<<endl;
-	
-	int pos = busquedaBinaria<Record, string>(data, "betty.reto.com", compRNF);
-	cout<<"La computadora de Betty esta en la posición: "<<pos<<endl;
+	int gm = busquedaBinaria<Record, string>(data, "gmail.com", compNDF);
+	cout << "El correo gmail.com se encuentra en la posición: "<<gm<<endl;
 
-	int pos = busquedaBinaria<Record, string>(data, "katherine.reto.com", compRNF);
-	cout<<"La computadora de Katherine esta en la posición: "<<pos<<endl;
+	int ou = busquedaBinaria<Record, string>(data, "outlook.com", compNDF);
+	cout << "El correo outlook.com se encuentra en la posición: "<<ou<<endl;
 
-	int pos = busquedaBinaria<Record, string>(data, "scott.reto.com", compRNF);
-	cout<<"La computadora de Scott esta en la posición: "<<pos<<endl;
+	int prot = busquedaBinaria<Record, string>(data, "protonmail.com", compNDF);
+	cout << "El correo protonmail.com se encuentra en la posición: "<<prot<<endl;
 
-	int pos = busquedaBinaria<Record, string>(data, "benjamin.reto.com", compRNF);
-	cout<<"La computadora de Benjamin esta en la posición: "<<pos<<endl;
+	int fre = busquedaBinaria<Record, string>(data, "freemailserver.com", compNDF);
+	cout << "El correo freemailserver.com se encuentra en la posición: "<<fre<<endl;
 
-	int pos = busquedaBinaria<Record, string>(data, "samuel.reto.com", compRNF);
-	cout<<"La computadora de Samuel esta en la posición: "<<pos<<endl;
-
-	int pos = busquedaBinaria<Record, string>(data, "raymond.reto.com", compRNF);
-	cout<<"La computadora de Raymond esta en la posición: "<<pos<<endl;
-	
-	//Pregunta 4
-	QuickSort <Record> s;
-	s.Sort(data, compDRNF);
-
-	for(int i = 0; i < 20; i++){
-		data[i].imprimirRecord();
-	}
-	
-	//Pregunta 5
-	QuickSort <Record> s;
-	s.Sort(data, compDRNF); 
-	int pos = busquedaBinaria<Record, string>(data, "server.reto.com", compRNF);
-	cout<<"La computadora server.reto.com esta en la posición: "<<pos<<endl;
-
-	//Pregunta 6
-	QuickSort <Record> s;
-	s.Sort(data, compDRNF);
-
-	int num = busquedaBinaria<Record, string>(data, "gmail.com", compNDF);
-	cout << "El correo gmail.com se encuentra en la posición: "<<num<<endl;
-
-	int num = busquedaBinaria<Record, string>(data, "outlook.com", compNDF);
-	cout << "El correo outlook.com se encuentra en la posición: "<<num<<endl;
-
-	int num = busquedaBinaria<Record, string>(data, "protonmail.com", compNDF);
-	cout << "El correo protonmail.com se encuentra en la posición: "<<num<<endl;
-
-	int num = busquedaBinaria<Record, string>(data, "freemailserver.com", compNDF);
-	cout << "El correo freemailserver.com se encuentra en la posición: "<<num<<endl;
-
-	//Pregunta 7
-	QuickSort <Record> s;
-	s.Sort(data, compDRpD);
+	cout << "***************************Pregunta 7***************************" << endl;
+	QuickSort <Record> siete;
+	siete.Sort(data, compDRpD);
 	
 	int num = busquedaBinaria<Record, int>(data, 1000, compPDF);
-	cout << "Hay: " << data.size()-num << "puertos abajo del 1000 que  se están usando" << endl;
+	cout << data.size() << endl;
+	cout << num << endl;
+	cout << "Hay: " << data.size()-num << " puertos abajo del 1000 que  se están usando" << endl;
+
+	for(int i = num; i< data.size(); i++){
+		data[i].imprimirRecord();
+	}
+
 	
-	
-	
+
 	
 	
 	
