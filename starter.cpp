@@ -200,32 +200,34 @@ int compDRNF(Record r1, Record r2){
 		return 1;
 	}
 }
+/*
 template <class T>
 class QuickSort: public Sorter<T>{
 	public:
-	void Sort(vector<T> &data){
-		SortAux(data, 0, data.size()-1);
+	void Sort(vector<T> &data, int comparador(T a, T b)){
+
+		SortAux(data, 0, data.size()-1, comparador(T a, T b) );
 	}
 	
 	private:
-	void SortAux(vector<T> &data, int lo, int hi){
+	void SortAux(vector<T> &data, int lo, int hi, int comparador(T a, T b)){
 		if(lo>=hi){
 			return;
 		}
-		int posOrdenado=Partition(data, lo, hi);
-		SortAux(data, lo, posOrdenado-1);
-		SortAux(data, posOrdenado+1, hi);
+		int posOrdenado=Partition(data, lo, hi, comparador(T a, T b));
+		SortAux(data, lo, posOrdenado-1, comparador(T a, T b));
+		SortAux(data, posOrdenado+1, hi, comparador(T a, T b));
 	}
 	
-	int Partition(vector<T> &data, int lo, int hi){
+	int Partition(vector<T> &data, int lo, int hi, int comparador(T a, T b)){
 		int p=lo;
 		int i=lo+1;
 		int j=hi;
 		while (true){
-			while(data[i]<=data[p] &&i<hi){
+			while(comparador(data[i], data[p]) < 1 &&i<hi){
 				i++;
 			}
-			while(data[j]>data[p]&&j>lo){
+			while(comparador(data[j], data[p]) == -1 &&j>lo){
 				j--;
 			}
 			if(i<j){
@@ -238,14 +240,34 @@ class QuickSort: public Sorter<T>{
 		return j;
 	}
 };
-
+*/
+template <class T>
+class SelectionSort: public Sorter<T>{
+	public:
+	void Sort(vector<T> &data, int comparador(T a, T b)){
+		for(int i=0; i<data.size()-1; i++){
+			int minimo=i;
+			for(int j=i+1; j<data.size(); j++){
+				if(comparador(data[j],data[minimo])==-1){
+					minimo=j;
+				}
+			}
+			this->Intercambiar(data, i, minimo);
+		}
+	}
+};
 
 
 int main(){
 	cargarDatos(); 
-	QuickSort <Record> s;
+	//QuickSort <Record> s;
+	//s.Sort(data, compDRNF);
+	SelectionSort<Record> s;
 	s.Sort(data, compDRNF);
-	
+	for(int i=0; i<100; i++){
+		data[i].imprimirRecord();
+	}
+
 	int pos = busquedaBinaria<Record, string>(data, "samuel.reto.com", compRNF);
 	cout<<"samuel.reto.com se encuentra en la posicion: "<<pos<<endl;
 
