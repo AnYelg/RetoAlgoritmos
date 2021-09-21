@@ -200,6 +200,46 @@ int compDRNF(Record r1, Record r2){
 		return 1;
 	}
 }
+
+template <class T>
+class QuickSort: public Sorter<T>{
+	public:
+	void Sort(vector<T> &data, int comparador(T a, T b)){
+		SortAux(data, 0, data.size()-1);
+	}
+	
+	private:
+	void SortAux(vector<T> &data, int lo, int hi){
+		if(lo>=hi){
+			return;
+		}
+		int posOrdenado=Partition(data, lo, hi);
+		SortAux(data, lo, posOrdenado-1);
+		SortAux(data, posOrdenado+1, hi);
+	}
+	
+	int Partition(vector<T> &data, int lo, int hi){
+		int p=lo;
+		int i=lo+1;
+		int j=hi;
+		while (true){
+			while((compDRNF(data[i],data[p]) < 1) && i < hi){
+				i++;
+			}
+			while(compDRNF(data[i],data[p]) == 1 &&j>lo){
+				j--;
+			}
+			if(i<j){
+				this->Intercambiar(data, i,j);
+			}
+			else{
+				this->Intercambiar(data, p, j);
+				break;
+			}
+		}
+		return j;
+	}
+};
 /*
 template <class T>
 class QuickSort: public Sorter<T>{
@@ -260,10 +300,10 @@ class SelectionSort: public Sorter<T>{
 
 int main(){
 	cargarDatos(); 
-	//QuickSort <Record> s;
-	//s.Sort(data, compDRNF);
-	SelectionSort<Record> s;
+	QuickSort <Record> s;
 	s.Sort(data, compDRNF);
+	//SelectionSort<Record> s;
+	//s.Sort(data, compDRNF);
 	for(int i=0; i<100; i++){
 		data[i].imprimirRecord();
 	}
