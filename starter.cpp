@@ -5,7 +5,8 @@
 #include <sstream>
 using namespace std;
 
-//Orden kulz
+//Andrea Yela González A01025250
+//Joshua Rúben Amaya Camilo A01025258
 
 class Record{
 	public:
@@ -414,5 +415,4 @@ int main(){
 		
 	}
 	
-	//data[0].imprimirRecord();
 }
