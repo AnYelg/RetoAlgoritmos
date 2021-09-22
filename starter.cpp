@@ -45,9 +45,6 @@ class Record{
 	void imprimirRecord(){
 		cout << fecha << "__" << hora << ":" << ipFuente << ":" << puertoFuente << ":" << nombreFuente <<":" << ipDestino << ":" << puertoDestino << ":" << nombreDestino << endl;
 	}
-	void imprimirDestino(){
-		cout << puertoDestino << ":" <<fecha << "__" << hora << ":" << ipFuente << ":" << puertoFuente << ":" << nombreFuente <<":" << ipDestino <<  ":" << nombreDestino << endl;
-	}
 };
 
 template <class T>
@@ -333,6 +330,12 @@ int main(){
 		if(data[i].fecha != data[0].fecha){
 			cout << "Información del segundo día, primer usuario: " << endl;
 			data[i].imprimirRecord();
+			int rec = 0; 
+			while(data[i].fecha == data[i+1].fecha){
+				rec++;
+				i++;
+			}
+			cout << "Número de records con el segundo día: " << rec << endl;
 			break;
 		}
 		else{
@@ -349,28 +352,59 @@ int main(){
 
 	int posj = busquedaBinaria<Record, string>(data, "jeffrey.reto.com", compRNF);
 	cout<<"La computadora de Jeffrey esta en la posición: "<<posj<<endl;
+	if (posj != -1){
+		data[posj].imprimirRecord();
+	}
 	
 	int posb = busquedaBinaria<Record, string>(data, "betty.reto.com", compRNF);
 	cout<<"La computadora de Betty esta en la posición: "<<posb<<endl;
-
+	if (posb != -1){
+		data[posb].imprimirRecord();
+	}
+	
 	int posk = busquedaBinaria<Record, string>(data, "katherine.reto.com", compRNF);
 	cout<<"La computadora de Katherine esta en la posición: "<<posk<<endl;
-
+	if (posk != -1){
+		data[posk].imprimirRecord();
+	}
+	
 	int poss = busquedaBinaria<Record, string>(data, "scott.reto.com", compRNF);
 	cout<<"La computadora de Scott esta en la posición: "<<poss<<endl;
-
+	if (poss != -1){
+		data[poss].imprimirRecord();
+	}
+	
 	int posbe = busquedaBinaria<Record, string>(data, "benjamin.reto.com", compRNF);
 	cout<<"La computadora de Benjamin esta en la posición: "<<posbe<<endl;
+	if (posbe != -1){
+		data[posbe].imprimirRecord();
+	}
 
 	int possam = busquedaBinaria<Record, string>(data, "samuel.reto.com", compRNF);
 	cout<<"La computadora de Samuel esta en la posición: "<<possam<<endl;
+	if (possam != -1){
+		data[possam].imprimirRecord();
+	}
 
 	int posr = busquedaBinaria<Record, string>(data, "raymond.reto.com", compRNF);
 	cout<<"La computadora de Raymond esta en la posición: "<<posr<<endl;
-	
+	if (posr != -1){
+		data[posr].imprimirRecord();
+	}
+
 	cout << "***************************Pregunta 4***************************" << endl;
 	aj.Sort(data, compDRipF);
-	cout << " La dirección de la red interna de la compañía es: "<< data[0].ipFuente << endl;
+	int h = 0;
+	while(h < data.size()){
+		if(data[h].ipFuente != "-"){
+			cout << " La dirección de la red interna de la compañía es: "<< data[h].ipFuente << endl;
+			break;
+		}
+		else{
+			h++;
+		}
+		
+	}
 	
 	cout << "***************************Pregunta 5***************************" << endl;
 	
