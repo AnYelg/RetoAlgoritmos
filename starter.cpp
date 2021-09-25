@@ -318,7 +318,6 @@ class QuickSort: public Sorter<T>{
 
 int main(){
 	cargarDatos(); 
-/*
 	cout << "***************************Pregunta 1***************************" << endl;
 	cout << "Número de registros: " << data.size() << endl;
 	
@@ -393,19 +392,9 @@ int main(){
 	}
 
 	cout << "***************************Pregunta 4***************************" << endl;
-	aj.Sort(data, compDRipF);
-	int h = 0;
-	while(h < data.size()){
-		if(data[h].ipFuente != "-"){
-			cout << " La dirección de la red interna de la compañía es: "<< data[h].ipFuente << endl;
-			break;
-		}
-		else{
-			h++;
-		}
-		
-	}
 	
+	cout << "Esta pregunta puede ser resuelta de manera analitica sin necesitar del código." << endl;
+
 	cout << "***************************Pregunta 5***************************" << endl;
 	
 	aj.Sort(data, compDRNF); 
@@ -433,9 +422,9 @@ int main(){
 
 	int fre = busquedaBinaria<Record, string>(data, "freemailserver.com", compNDF);
 	cout << "El correo freemailserver.com se encuentra en la posición: "<<fre<<endl;
-*/
+
 	cout << "***************************Pregunta 7***************************" << endl;
-	QuickSort <Record> aj;
+
 	aj.Sort(data, compDRpD);
 
 	cout << "Puertos menores que 1000: " << endl;	 
