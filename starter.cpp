@@ -318,7 +318,7 @@ class QuickSort: public Sorter<T>{
 
 int main(){
 	cargarDatos(); 
-
+/*
 	cout << "***************************Pregunta 1***************************" << endl;
 	cout << "Número de registros: " << data.size() << endl;
 	
@@ -433,17 +433,14 @@ int main(){
 
 	int fre = busquedaBinaria<Record, string>(data, "freemailserver.com", compNDF);
 	cout << "El correo freemailserver.com se encuentra en la posición: "<<fre<<endl;
-
+*/
 	cout << "***************************Pregunta 7***************************" << endl;
-	
+	QuickSort <Record> aj;
 	aj.Sort(data, compDRpD);
-	
-	int num = busquedaBinaria<Record, int>(data, 1000, compPDF);
-	cout << "Existen " << num << " usuarios usando puertos abajo del 1000." << endl;
-	
-	 
-	for(int i = num; i< data.size(); i--){
-		if (data[i].puertoDestino <= 1000 && data[i+1].puertoDestino != data[i].puertoDestino){
+
+	cout << "Puertos menores que 1000: " << endl;	 
+	for(int i = 0; i < data.size(); i++){
+		if (data[i].puertoDestino < 1000 && data[i+1].puertoDestino != data[i].puertoDestino){
 			cout << "Número de Puerto Destino: " << data[i].puertoDestino << endl;	
 		}
 		
