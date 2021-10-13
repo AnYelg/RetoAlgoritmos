@@ -103,7 +103,24 @@ int main(){
 
     cargarDatos();
 
-    string nombre = "primer nombre";
+    string nombre = "jacob.reto.com";
 
     ConexionesComputadora concom(ipagregado, nombre);
+
+	cout << "***************** Pregunta 1 *****************" << endl;
+	cout << "¿Qué dirección ip estas usando?" << endl;
+	cout << "172.21.65" << endl;
+
+	cout << "***************** Pregunta 2 *****************" << endl;
+	cout << "¿Cuál fue la ip de la última conexión que recibió esta computadora? ¿Es interna o externa?" << endl;
+
+	cout << "***************** Pregunta 3 *****************" << endl;
+	cout << "¿Cuántas conexiones entrantes tiene esta computadora?" << endl;
+
+	cout << "***************** Pregunta 4 *****************" << endl;
+	cout << "¿Cuántas conexiones salientes tiene esta computadora?" << endl;
+
+	cout << "***************** Pregunta Extra *****************" << endl;
+	cout << "¿Tiene esta computadora 3 conexiones seguidas a un mismo sitio web?" << endl;
+	
 }
