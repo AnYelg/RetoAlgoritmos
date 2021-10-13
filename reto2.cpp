@@ -75,21 +75,21 @@ class ConexionesComputadora{
     public:
         string IP;
         string Nombre;
-    
+    	stack<string> cnxEntrantes;
+        queue<string> cnxSalientes;
+
         ConexionesComputadora(string ip, string n){
             this ->IP = "172.21.65." + ip;
             this ->Nombre;
-
-            stack<string> cnxEntrantes;
-            queue<string> cnxSalientes;
-
-            void ConexionesEntrantes(Record r){ //atras para delante
-                cnxEntrantes.push(r.ipFuente);
-            }
-            void ConexionesSalientes(Record r){ //adelante para atras
-                cnxSalientes.push(r.ipDestino);
-            }
-        }
+		}
+            
+		void ConexionesEntrantes(Record r){ //atras para delante
+			cnxEntrantes.push(r.ipFuente);
+		}
+		void ConexionesSalientes(Record r){ //adelante para atras
+			cnxSalientes.push(r.ipDestino);
+		}
+        
 
         
         
