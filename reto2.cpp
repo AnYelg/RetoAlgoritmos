@@ -56,6 +56,12 @@ class Record{
 	void imprimirRecord(){
 		cout << fecha << "__" << hora << ":" << ipFuente << ":" << puertoFuente << ":" << nombreFuente <<":" << ipDestino << ":" << puertoDestino << ":" << nombreDestino << endl;
 	}
+	void imprimiripD(){
+		cout << ipDestino << endl;
+	}
+	void imprimirpD(){
+		cout << puertoDestino << endl;
+	}
 
 	
 };
@@ -80,118 +86,6 @@ void cargarDatos(){
 	}
 	in.close();
 
-	Record r2(partes[3], partes[5], partes[6]);
-}
-
-template <class T>
-class Sorter{
-	public:
-	virtual void Sort(vector<T> &data, int comparador(T a, T b))=0;
-	
-	void Imprimir(vector<T> &data){
-		for(int i=0; i<data.size(); i++){
-			cout<<data[i]<<",";
-		}
-		cout<<endl;
-	}
-	
-	void Intercambiar(vector<T> &data, int posI, int posJ){
-		T temp=data[posI];
-		data[posI]=data[posJ];
-		data[posJ]=temp;
-	}
-};
-
-template <class T>
-class QuickSort: public Sorter<T>{
-	public:
-	void Sort(vector<T> &data, int comparador(T a, T b)){
-
-		SortAux(data, 0, data.size()-1, comparador);
-	}
-	
-	private:
-	void SortAux(vector<T> &data, int lo, int hi, int comparador(T a, T b)){
-		if(lo>=hi){
-			return;
-		}
-		int posOrdenado=Partition(data, lo, hi, comparador);
-		SortAux(data, lo, posOrdenado-1, comparador);
-		SortAux(data, posOrdenado+1, hi, comparador);
-	}
-	
-	int Partition(vector<T> &data, int lo, int hi, int comparador(T a, T b)){
-		int p=lo;
-		int i=lo+1;
-		int j=hi;
-		while (true){
-			while(comparador(data[i], data[p]) < 1 &&i<hi){
-				i++;
-			}
-			while(comparador(data[j], data[p]) == 1 &&j>lo){
-				j--;
-			}
-			if(i<j){
-				this->Intercambiar(data, i,j);
-			}else{
-				this->Intercambiar(data, p, j);
-				break;
-			}
-		}
-		return j;
-	}
-};
-
-template <class T, class B>
-int busquedaBinaria (vector<T> a, B buscado, int comparador(T a, B b)){
-    int inicio = 0;
-    int fin = a.size()-1;
-    while (inicio <=fin){
-        int medio = (fin+inicio)/2;
-        if(comparador(a[medio],buscado) == 0){
-            return medio;
-        }
-		else if (comparador(a[medio], buscado) == -1){ 
-            inicio = medio + 1;
-        }
-        else{
-            fin = medio-1;
-        }
-    }
-    return -1;
-}
-
-int compRipF(Record r, string ipF){
-	if(r.ipFuente < ipF){
-		return -1;
-	}
-	else if (r.ipFuente == ipF){
-		return 0;
-	}
-	else {
-		return 1;
-	}
-}
-
-int compIpDF(Record r, string ipD){
-	if(r.ipDestino < ipD){
-		return -1;	
-	}
-	else if (r.ipDestino == ipD){
-		return 0;
-	}else{
-		return 1;
-	}
-}
-
-int compRNF(Record r, string nF){
-	if(r.nombreFuente<nF){
-		return -1;
-	}else if (r.nombreFuente==nF){
-		return 0;
-	}else{
-		return 1;
-	}
 }
 
 
@@ -199,11 +93,11 @@ class ConexionesComputadora{
     public:
         string IP;
         string Nombre;
-    	stack<string> cnxEntrantes;
-        queue<string> cnxSalientes;
+		stack<string> cnxEntrantes;
+		queue<string> cnxSalientes;
 
         ConexionesComputadora(string ip, string n){
-            this ->IP = "172.21.65." + ip;
+            this ->IP = ip;
             this ->Nombre = n;
 		}
             
@@ -227,18 +121,21 @@ int compDRNF(Record r1, Record r2){
 }
 
 int main(){
-    string ipagregado;
-    int numeroinp;
-	QuickSort <Record> r;
-	r.Sort(data, compDRNF);
-    cout << "Ingrese un número entre el 1 y el 150: "; cin >> numeroinp; cout<< endl;
-    ipagregado = to_string(numeroinp);
 
+    int numeroinp;
+    cout << "Ingrese un número entre el 1 y el 150: "; cin >> numeroinp; cout<< endl;	
+	while (1 > numeroinp || numeroinp > 150){
+		cout << "Su número esta fuera del rango, vuelva a insertar: "; cin >> numeroinp;
+	}
+	string ipagregado = to_string(numeroinp);
+	string ipfinal = "172.21.65."+ ipagregado;
+	string computadora;
+	
+	
     cargarDatos();
 
-    string computadora = "jacob.reto.com";
 
-    ConexionesComputadora concom(ipagregado, computadora);
+    //ConexionesComputadora concom(ipagregado, computadora);
 
 	
 	cout << "***************** Pregunta 1 *****************" << endl;
@@ -247,19 +144,51 @@ int main(){
 
 	cout << "***************** Pregunta 2 *****************" << endl;
 	cout << "¿Cuál fue la ip de la última conexión que recibió esta computadora? ¿Es interna o externa?" << endl;
-	
-	//int posj = busquedaBinaria<Record, string>(data, "william.reto.com", compRNF);
-	//data[posj].imprimirRecord();
-	
+	//Preguntarle como imprimir solo el ultimo
+	for (int i = 0; i< data.size(); i++){
+		if(data[i].ipFuente == ipfinal){
+			computadora = data[i].nombreFuente;
+			break;
+		}
+
+	}
+	for (int i = 0; i< data.size(); i++){
+		if(data[i].nombreFuente == computadora){
+			data[i].imprimiripD();
+		}
+
+	}//Respuesta = INTERNA
 	
 	cout << "***************** Pregunta 3 *****************" << endl;
 	cout << "¿Cuántas conexiones entrantes tiene esta computadora?" << endl;
-	
+	ConexionesComputadora cocom(ipfinal, computadora);
+	for(int i = 0; i< data.size(); i++){
+		if(data[i].ipFuente == ipfinal){
+			cocom.ConexionesEntrantes(data[i]);
+		}
+	}
+	cout << cocom.cnxEntrantes.size()<< endl;
 
 	cout << "***************** Pregunta 4 *****************" << endl;
 	cout << "¿Cuántas conexiones salientes tiene esta computadora?" << endl;
 
+	for(int i = 0; i< data.size(); i++){
+		if(data[i].ipDestino == ipfinal){
+			cocom.ConexionesSalientes(data[i]);
+		}
+	}
+	cout << cocom.cnxSalientes.size()<< endl;
+
 	cout << "***************** Pregunta Extra *****************" << endl;
 	cout << "¿Tiene esta computadora 3 conexiones seguidas a un mismo sitio web?" << endl;
+
+	for(int i = 0; i< data.size(); i++){
+		if(data[i].puertoDestino == data[i+1].puertoDestino && data[i].puertoDestino == data[i+2].puertoDestino){
+			int puertodes = data[i].puertoDestino;
+			cout << "Sí sucede con el puerto: " << puertodes << endl;
+		}
+		
+		
+	}
 	
 }
