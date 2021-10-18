@@ -136,7 +136,7 @@ int main(){
 	
 	cout << "***************** Pregunta 1 *****************" << endl;
 	cout << "¿Qué dirección ip estas usando?" << endl;
-	cout << "172.21.65" << endl;
+	cout << ipfinal << endl;
 
 	cout << "***************** Pregunta 2 *****************" << endl;
 	cout << "¿Cuál fue la ip de la última conexión que recibió esta computadora? ¿Es interna o externa?" << endl;
@@ -146,8 +146,8 @@ int main(){
 			computadora = data[i].nombreFuente;
 			break;
 		}
-
 	}
+	
 	for (int i = 0; i< data.size(); i++){
 		if(data[i].nombreFuente == computadora){
 			data[i].imprimiripD();
