@@ -133,10 +133,6 @@ int main(){
 	
 	
     cargarDatos();
-
-
-    //ConexionesComputadora concom(ipagregado, computadora);
-
 	
 	cout << "***************** Pregunta 1 *****************" << endl;
 	cout << "¿Qué dirección ip estas usando?" << endl;
