@@ -109,15 +109,8 @@ class ConexionesComputadora : public Record{
 		void ConexionesSalientes(Record r){ //adelante para atras
 			cnxSalientes.push(r);
 		}
-		// void tipodeConexionE(){
-        //     if(IP == cnxEntrantes.top().ipDestino.substr(0,10)){
-        //         cout << "La red es interna"<< endl;
-        //     }
-		// 	else{
-		// 		cout << "La red es externa" << endl;
-		// 	}
-        // }
-		void tipodeConexionS(){
+
+		void tipodeConexion(){
             if(IP == cnxSalientes.back().ipFuente.substr(0,10)){
                 cout << "La red es interna"<< endl;
             }
@@ -148,52 +141,30 @@ int main(){
 
 	cout << "***************** Pregunta 2 *****************" << endl;
 	cout << "¿Cuál fue la ip de la última conexión que recibió esta computadora? ¿Es interna o externa?" << endl;
-	//Preguntarle como imprimir solo el ultimo
-
-	for (int i = 0; i< data.size(); i++){
-		if(data[i].ipFuente == ipfinal){
-			computadora = data[i].nombreFuente;
-			break;
-		}
-	}
-	ConexionesComputadora cocom("172.21.65.", ipagregado, computadora);
+	
+	ConexionesComputadora concom("172.21.65.", ipagregado, computadora);
 	
 	for (int i = 0; i< data.size(); i++){
-		if(data[i].ipDestino == cocom.ipbuscada){
-			cocom.cnxEntrantes(data[i]);
+		if(data[i].ipDestino == concom.ipbuscada){
+			concom.ConexionesEntrantes(data[i]);
 		}
-		else if(data[i].ipFuente == cocom.ipbuscada){
-			cocom.cnxSalientes(data[i]);
+		else if(data[i].ipFuente == concom.ipbuscada){
+			concom.ConexionesSalientes(data[i]);
 		}
+
 	}
 
-	
-	for (int i = 0; i< data.size(); i++){
-		if(data[i].nombreFuente == computadora){
-			data[i].imprimiripD();
-		}
-
-	}//Respuesta = INTERNA
+	concom.tipodeConexion();
 
 	cout << "***************** Pregunta 3 *****************" << endl;
 	cout << "¿Cuántas conexiones entrantes tiene esta computadora?" << endl;
 	
-	for(int i = 0; i< data.size(); i++){
-		if(data[i].ipFuente == ipfinal){
-			cocom.ConexionesEntrantes(data[i]);
-		}
-	}
-	cout << cocom.cnxEntrantes.size()<< endl;
+	cout << concom.cnxEntrantes.size()<< endl;
 
 	cout << "***************** Pregunta 4 *****************" << endl;
 	cout << "¿Cuántas conexiones salientes tiene esta computadora?" << endl;
 
-	for(int i = 0; i< data.size(); i++){
-		if(data[i].ipDestino == ipfinal){
-			cocom.ConexionesSalientes(data[i]);
-		}
-	}
-	cout << cocom.cnxSalientes.size()<< endl;
+	cout << concom.cnxSalientes.size()<< endl;
 
 	cout << "***************** Pregunta Extra *****************" << endl;
 	cout << "¿Tiene esta computadora 3 conexiones seguidas a un mismo sitio web?" << endl;
