@@ -141,7 +141,12 @@ int main(){
 
 	cout << "***************** Pregunta 2 *****************" << endl;
 	cout << "¿Cuál fue la ip de la última conexión que recibió esta computadora? ¿Es interna o externa?" << endl;
-	
+	for (int i = 0; i< data.size(); i++){
+		if(data[i].ipFuente == ipfinal){
+			computadora = data[i].nombreFuente;
+			break;
+		}
+	}
 	ConexionesComputadora concom("172.21.65.", ipagregado, computadora);
 	
 	for (int i = 0; i< data.size(); i++){
