@@ -104,19 +104,19 @@ class ConexionesComputadora : public Record{
 		}
             
 		void ConexionesEntrantes(Record r){ //atras para delante
-			cnxEntrantes.push(r.ipDestino);
+			cnxEntrantes.push(r);
 		}
 		void ConexionesSalientes(Record r){ //adelante para atras
-			cnxSalientes.push(r.ipFuente);
+			cnxSalientes.push(r);
 		}
-		void tipodeConexionE(){
-            if(IP == cnxEntrantes.top().ipDestino.substr(0,10)){
-                cout << "La red es interna"<< endl;
-            }
-			else{
-				cout << "La red es externa" << endl;
-			}
-        }
+		// void tipodeConexionE(){
+        //     if(IP == cnxEntrantes.top().ipDestino.substr(0,10)){
+        //         cout << "La red es interna"<< endl;
+        //     }
+		// 	else{
+		// 		cout << "La red es externa" << endl;
+		// 	}
+        // }
 		void tipodeConexionS(){
             if(IP == cnxSalientes.back().ipFuente.substr(0,10)){
                 cout << "La red es interna"<< endl;
@@ -149,6 +149,13 @@ int main(){
 	cout << "***************** Pregunta 2 *****************" << endl;
 	cout << "¿Cuál fue la ip de la última conexión que recibió esta computadora? ¿Es interna o externa?" << endl;
 	//Preguntarle como imprimir solo el ultimo
+
+	for (int i = 0; i< data.size(); i++){
+		if(data[i].ipFuente == ipfinal){
+			computadora = data[i].nombreFuente;
+			break;
+		}
+	}
 	ConexionesComputadora cocom("172.21.65.", ipagregado, computadora);
 	
 	for (int i = 0; i< data.size(); i++){
@@ -159,6 +166,7 @@ int main(){
 			cocom.cnxSalientes(data[i]);
 		}
 	}
+
 	
 	for (int i = 0; i< data.size(); i++){
 		if(data[i].nombreFuente == computadora){
