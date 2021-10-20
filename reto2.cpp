@@ -12,56 +12,56 @@ using namespace std;
 
 class Record{
 	public:
-    string fecha;
-    string hora;
-    string ipFuente;
-    int puertoFuente;
-	string nombreFuente;
-    string ipDestino;
-    int puertoDestino;
-	string nombreDestino;
-	
-	Record(string f, string h, string ipF, string pF, string nF,string ipD, string pD, string nD){
-		this -> fecha = f;
-        this -> hora = h;
-        this -> ipFuente = ipF; 
-        this -> nombreFuente = nF;
-        this -> ipDestino = ipD;
-        this -> nombreDestino = nD;
-
-		if(pF == "-"){
-			this -> puertoFuente = 0;
-		}else{
-			this -> puertoFuente = stoi(pF);
-		}
-
-        if(pD == "-"){
-			this -> puertoDestino = 0;
-		}else{
-			this -> puertoDestino = stoi(pF);
-		}
-
+		string fecha;
+		string hora;
+		string ipFuente;
+		int puertoFuente;
+		string nombreFuente;
+		string ipDestino;
+		int puertoDestino;
+		string nombreDestino;
 		
-	}
-	Record(){
+		Record(string f, string h, string ipF, string pF, string nF,string ipD, string pD, string nD){
+			this -> fecha = f;
+			this -> hora = h;
+			this -> ipFuente = ipF; 
+			this -> nombreFuente = nF;
+			this -> ipDestino = ipD;
+			this -> nombreDestino = nD;
 
-	}
+			if(pF == "-"){
+				this -> puertoFuente = 0;
+			}else{
+				this -> puertoFuente = stoi(pF);
+			}
 
-	Record(string ipF,  string nF,string ipD){
-        this -> ipFuente = ipF; 
-        this -> nombreFuente = nF;
-        this -> ipDestino = ipD;	
-	}
-	
-	void imprimirRecord(){
-		cout << fecha << "__" << hora << ":" << ipFuente << ":" << puertoFuente << ":" << nombreFuente <<":" << ipDestino << ":" << puertoDestino << ":" << nombreDestino << endl;
-	}
-	void imprimiripD(){
-		cout << ipDestino << endl;
-	}
-	void imprimirpD(){
-		cout << puertoDestino << endl;
-	}
+			if(pD == "-"){
+				this -> puertoDestino = 0;
+			}else{
+				this -> puertoDestino = stoi(pF);
+			}
+
+			
+		}
+		Record(){
+
+		}
+
+		Record(string ipF,  string nF,string ipD){
+			this -> ipFuente = ipF; 
+			this -> nombreFuente = nF;
+			this -> ipDestino = ipD;	
+		}
+		
+		void imprimirRecord(){
+			cout << fecha << "__" << hora << ":" << ipFuente << ":" << puertoFuente << ":" << nombreFuente <<":" << ipDestino << ":" << puertoDestino << ":" << nombreDestino << endl;
+		}
+		void imprimiripD(){
+			cout << ipDestino << endl;
+		}
+		void imprimirpD(){
+			cout << puertoDestino << endl;
+		}
 
 	
 };
@@ -89,36 +89,44 @@ void cargarDatos(){
 }
 
 
-class ConexionesComputadora{
+class ConexionesComputadora : public Record{
     public:
         string IP;
         string Nombre;
-		stack<string> cnxEntrantes;
-		queue<string> cnxSalientes;
+		string ipbuscada;
+		stack<Record> cnxEntrantes;
+		queue<Record> cnxSalientes;
 
-        ConexionesComputadora(string ip, string n){
+        ConexionesComputadora(string ip, string ag, string n){
             this ->IP = ip;
             this ->Nombre = n;
+            this ->ipbuscada = ip+ag;
 		}
             
 		void ConexionesEntrantes(Record r){ //atras para delante
-			cnxEntrantes.push(r.ipFuente);
+			cnxEntrantes.push(r.ipDestino);
 		}
 		void ConexionesSalientes(Record r){ //adelante para atras
-			cnxSalientes.push(r.ipDestino);
-		}              
+			cnxSalientes.push(r.ipFuente);
+		}
+		void tipodeConexionE(){
+            if(IP == cnxEntrantes.top().ipDestino.substr(0,10)){
+                cout << "La red es interna"<< endl;
+            }
+			else{
+				cout << "La red es externa" << endl;
+			}
+        }
+		void tipodeConexionS(){
+            if(IP == cnxSalientes.back().ipFuente.substr(0,10)){
+                cout << "La red es interna"<< endl;
+            }
+			else{
+				cout << "La red es externa" << endl;
+			}
+        }
         
 };
-
-int compDRNF(Record r1, Record r2){
-	if(r1.nombreFuente < r2.nombreFuente){
-		return -1;
-	}else if (r1.nombreFuente == r2.nombreFuente){
-		return 0;
-	}else{
-		return 1;
-	}
-}
 
 int main(){
 
@@ -141,10 +149,14 @@ int main(){
 	cout << "***************** Pregunta 2 *****************" << endl;
 	cout << "¿Cuál fue la ip de la última conexión que recibió esta computadora? ¿Es interna o externa?" << endl;
 	//Preguntarle como imprimir solo el ultimo
+	ConexionesComputadora cocom("172.21.65.", ipagregado, computadora);
+	
 	for (int i = 0; i< data.size(); i++){
-		if(data[i].ipFuente == ipfinal){
-			computadora = data[i].nombreFuente;
-			break;
+		if(data[i].ipDestino == cocom.ipbuscada){
+			cocom.cnxEntrantes(data[i]);
+		}
+		else if(data[i].ipFuente == cocom.ipbuscada){
+			cocom.cnxSalientes(data[i]);
 		}
 	}
 	
@@ -154,10 +166,10 @@ int main(){
 		}
 
 	}//Respuesta = INTERNA
-	
+
 	cout << "***************** Pregunta 3 *****************" << endl;
 	cout << "¿Cuántas conexiones entrantes tiene esta computadora?" << endl;
-	ConexionesComputadora cocom(ipfinal, computadora);
+	
 	for(int i = 0; i< data.size(); i++){
 		if(data[i].ipFuente == ipfinal){
 			cocom.ConexionesEntrantes(data[i]);
