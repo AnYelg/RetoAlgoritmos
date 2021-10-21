@@ -93,85 +93,109 @@ class ConexionesComputadora : public Record{
         string IP;
         string Nombre;
 		string ipbuscada;
-		stack<Record> cnxEntrantes;
-		queue<Record> cnxSalientes;
-        vector <string> cnxNombres;
-
-        ConexionesComputadora(string ip){
-		    this->ipbuscada = ip;
+		vector <string> cnxEntrantes;
+		vector <string> cnxSalientes;
+        vector <string> cnxNombreF;
+        vector <string> cnxNombreD;
+        ConexionesComputadora(){
+		    this->IP="";
+            this ->Nombre = "";
 	    }
-
-        ConexionesComputadora(string ip, string ag, string n){
+        ConexionesComputadora(string ip){
+		    this->IP=ip;
+	    }
+        ConexionesComputadora(string ip, string n){
             this ->IP = ip;
             this ->Nombre = n;
-            this ->ipbuscada = ip+ag;
 		}
             
-		void ConexionesEntrantes(Record r){ //atras para delante
-			cnxEntrantes.push(r);
+		void ConexionesEntrantes(string r){ //atras para delante
+			cnxEntrantes.push_back(r);
 		}
-		void ConexionesSalientes(Record r){ //adelante para atras
-			cnxSalientes.push(r);
+		void ConexionesSalientes(string r){ //adelante para atras
+			cnxSalientes.push_back(r);
 		}
-        void ConexionesNombre(string ipDestino){
-            cnxNombres.push_back(ipDestino);
-        }
+        // void ConexionesNombreF(string r){
+        //     cnxNombreF.push_back(r);
+        // }
+        // void ConexionesNombreD(string r){
+        //     cnxNombreD.push_back(r);
+        // }
             
-		void tipodeConexion(){
-            if(IP == cnxSalientes.back().ipFuente.substr(0,10)){
-                cout << "La red es interna"<< endl;
-            }
-			else{
-				cout << "La red es externa" << endl;
-			}
-        }
-        void imprimir(){
-		    cout<<ipbuscada<<":";
-		for(string ipDestino: cnxNombres){
+    void imprimir(){
+		cout<<IP<<":";
+		for(string ipDestino: cnxSalientes){
 			cout<<ipDestino<<",";
 		}
 		cout<<endl;
 	}
-
-        // void meterdiccionario(){
-        //     if(Nombre == cnxNombres )
-        // }
-
         
 };
 
 
 int main(){
     cargarDatos();
-    unordered_map<string, ConexionesComputadora> d;
+    // unordered_map<string, ConexionesComputadora> d;
     
-    int numeroinp;
-    cout << "Ingrese un número entre el 1 y el 150: "; cin >> numeroinp; cout<< endl;	
-	while (1 > numeroinp || numeroinp > 150){
-		cout << "Su número esta fuera del rango, vuelva a insertar: "; cin >> numeroinp;
-	}
+    // int numeroinp;
+    // cout << "Ingrese un número entre el 1 y el 150: "; cin >> numeroinp; cout<< endl;	
+	// while (1 > numeroinp || numeroinp > 150){
+	// 	cout << "Su número esta fuera del rango, vuelva a insertar: "; cin >> numeroinp;
+	// }
 
-	string ipagregado = to_string(numeroinp);
-	string ipfinal = "172.21.65."+ ipagregado;
-	string computadora;
+	// string ipagregado = to_string(numeroinp);
+	// string ipfinal = "172.21.65."+ ipagregado;
+	// string computadora;
 
-    for (int i = 0; i< data.size(); i++){
-		if(data[i].ipFuente == ipfinal){
-			computadora = data[i].nombreFuente;
-			break;
+    // for (int i = 0; i< data.size(); i++){
+	// 	if(data[i].ipFuente == ipfinal){
+	// 		computadora = data[i].nombreFuente;
+	// 		break;
+    //     }
+	// }
+	// ConexionesComputadora concom("172.21.65.", ipagregado, computadora);
+    unordered_map<string, ConexionesComputadora> cnx;
+    for(Record r:data){
+		if(cnx.find(r.ipFuente)==cnx.end()){
+			ConexionesComputadora a(r.ipFuente);
+			cnx[r.ipFuente]=a;
+		}
+		cnx[r.ipFuente].ConexionesSalientes(r.ipDestino);
+
+        if(cnx.find(r.ipDestino)==cnx.end()){
+			ConexionesComputadora a(r.ipDestino);
+			cnx[r.ipDestino]=a;
+		}
+		cnx[r.ipDestino].ConexionesEntrantes(r.ipFuente);
 	}
-	ConexionesComputadora concom("172.21.65.", ipagregado, computadora);
-    d.insert({"hola", concom});
 
     for(Record r:data){
-		if(d.find(r.ipFuente)== d.end()){
-			ConexionesComputadora a(r.ipFuente);
-			d[r.ipFuente]=a;
+		if(cnx.find(r.ipDestino)==cnx.end()){
+			ConexionesComputadora a(r.ipDestino);
+			cnx[r.ipDestino]=a;
 		}
-		d[r.ipFuente].ConexionesNombre(r.ipDestino);
+		cnx[r.ipDestino].ConexionesEntrantes(r.ipFuente);
 	}
-	for(auto c:d){
+
+    // for(Record r:data){
+	// 	if(cnx.find(r.nombreFuente)==cnx.end()){
+	// 		ConexionesComputadora a(r.nombreFuente);
+	// 		cnx[r.nombreFuente]=a;
+	// 	}
+	// 	cnx[r.nombreFuente].ConexionesNombreF(r.ipFuente);
+	// }
+
+    // for(Record r:data){
+	// 	if(cnx.find(r.nombreDestino)==cnx.end()){
+	// 		ConexionesComputadora a(r.nombreDestino);
+	// 		cnx[r.nombreDestino]=a;
+	// 	}
+	// 	cnx[r.nombreDestino].ConexionesNombreD(r.ipDestino);
+	// }
+
+	for(auto c:cnx){
 		c.second.imprimir();
 	}
+    
     
 }
