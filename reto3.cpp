@@ -1,10 +1,9 @@
 #include <iostream>
 #include <unordered_map>
+#include <unordered_set>
 #include <string>
 #include <fstream>
 #include <vector>
-#include <stack>
-#include <queue>
 #include <sstream>
 
 using namespace std;
@@ -92,18 +91,20 @@ class ConexionesComputadora : public Record{
     public:
         string IP;
         string Nombre;
-		string ipbuscada;
 		vector <string> cnxEntrantes;
 		vector <string> cnxSalientes;
         vector <string> cnxNombreF;
         vector <string> cnxNombreD;
+
         ConexionesComputadora(){
 		    this->IP="";
             this ->Nombre = "";
 	    }
+
         ConexionesComputadora(string ip){
 		    this->IP=ip;
 	    }
+
         ConexionesComputadora(string ip, string n){
             this ->IP = ip;
             this ->Nombre = n;
@@ -115,46 +116,39 @@ class ConexionesComputadora : public Record{
 		void ConexionesSalientes(string r){ //adelante para atras
 			cnxSalientes.push_back(r);
 		}
-        // void ConexionesNombreF(string r){
-        //     cnxNombreF.push_back(r);
-        // }
-        // void ConexionesNombreD(string r){
-        //     cnxNombreD.push_back(r);
-        // }
+        void ConexionesNombreF(string r){
+            cnxNombreF.push_back(r);
+        }
+        void ConexionesNombreD(string r){
+            cnxNombreD.push_back(r);
+        }
+
             
-    void imprimir(){
-		cout<<IP<<":";
-		for(string ipDestino: cnxSalientes){
-			cout<<ipDestino<<",";
-		}
-		cout<<endl;
-	}
+        void imprimirDestino(){
+            cout<<IP<<":";
+            for(string ipDestino: cnxSalientes){
+                cout<<ipDestino<<",";
+            }
+            cout<<endl;
+        }
+
+        void imprimirFuente(){
+            cout<<IP<<":";
+            for(string ipFuente: cnxEntrantes){
+                cout<<ipFuente<<",";
+            }
+            cout<<endl;
+        }
+
         
 };
 
 
 int main(){
     cargarDatos();
-    // unordered_map<string, ConexionesComputadora> d;
-    
-    // int numeroinp;
-    // cout << "Ingrese un número entre el 1 y el 150: "; cin >> numeroinp; cout<< endl;	
-	// while (1 > numeroinp || numeroinp > 150){
-	// 	cout << "Su número esta fuera del rango, vuelva a insertar: "; cin >> numeroinp;
-	// }
+   
+    unordered_map<string, ConexionesComputadora> cnx; //Creación del diccionario
 
-	// string ipagregado = to_string(numeroinp);
-	// string ipfinal = "172.21.65."+ ipagregado;
-	// string computadora;
-
-    // for (int i = 0; i< data.size(); i++){
-	// 	if(data[i].ipFuente == ipfinal){
-	// 		computadora = data[i].nombreFuente;
-	// 		break;
-    //     }
-	// }
-	// ConexionesComputadora concom("172.21.65.", ipagregado, computadora);
-    unordered_map<string, ConexionesComputadora> cnx;
     for(Record r:data){
 		if(cnx.find(r.ipFuente)==cnx.end()){
 			ConexionesComputadora a(r.ipFuente);
@@ -167,35 +161,80 @@ int main(){
 			cnx[r.ipDestino]=a;
 		}
 		cnx[r.ipDestino].ConexionesEntrantes(r.ipFuente);
-	}
 
-    for(Record r:data){
-		if(cnx.find(r.ipDestino)==cnx.end()){
-			ConexionesComputadora a(r.ipDestino);
-			cnx[r.ipDestino]=a;
+        if(cnx.find(r.nombreFuente)==cnx.end()){
+			ConexionesComputadora a(r.nombreFuente);
+			cnx[r.nombreFuente]=a;
 		}
-		cnx[r.ipDestino].ConexionesEntrantes(r.ipFuente);
-	}
-
-    // for(Record r:data){
-	// 	if(cnx.find(r.nombreFuente)==cnx.end()){
-	// 		ConexionesComputadora a(r.nombreFuente);
-	// 		cnx[r.nombreFuente]=a;
-	// 	}
-	// 	cnx[r.nombreFuente].ConexionesNombreF(r.ipFuente);
-	// }
-
-    // for(Record r:data){
-	// 	if(cnx.find(r.nombreDestino)==cnx.end()){
-	// 		ConexionesComputadora a(r.nombreDestino);
-	// 		cnx[r.nombreDestino]=a;
-	// 	}
-	// 	cnx[r.nombreDestino].ConexionesNombreD(r.ipDestino);
-	// }
-
-	for(auto c:cnx){
-		c.second.imprimir();
-	}
+		cnx[r.nombreFuente].ConexionesNombreF(r.ipFuente);
+        
+        if(cnx.find(r.nombreDestino)==cnx.end()){
+			ConexionesComputadora a(r.nombreDestino);
+			cnx[r.nombreDestino]=a;
+		}
+		cnx[r.nombreDestino].ConexionesNombreD(r.ipDestino);
     
+	}
+
+    unordered_set<string> anomalo;
+    unordered_set<string> preg2;
+    unordered_set<string> preg3;
+    unordered_set<string> preg4;
+    unordered_set<string> preg6;
+    unordered_set<string> preg7;
+
+    for(int i = 0; i< data.size(); i++){
+        if(data[i].nombreFuente.substr(data[i].nombreFuente.size()-8,data[i].nombreFuente.size()) != "reto.com" || data[i].ipFuente.substr(0,10) != "172.21.65." || data[i].nombreDestino != "-"){
+            anomalo.insert(data[i].nombreDestino);
+        }
+
+        if(data[i].nombreFuente.substr(data[i].nombreFuente.size()-8,data[i].nombreFuente.size()) != "reto.com" || data[i].ipFuente.substr(0,10) != "172.21.65." || data[i].nombreDestino != "-"){
+            preg2.insert(data[i].ipDestino);
+        }
+
+        if(data[i].ipDestino.substr(0,10) == "172.21.65."){
+            preg3.insert(data[i].nombreDestino);
+        }
+
+        if(data[i].ipFuente == "172.21.65.35"){
+            preg4.insert(data[i].ipDestino);
+        }
+
+        if((data[i].nombreFuente.substr(data[i].nombreFuente.size()-8,data[i].nombreFuente.size()) != "reto.com" || data[i].ipDestino.substr(0,10) != "172.21.65." || data[i].nombreDestino != "-") && (data[i].ipFuente == "172.21.65.35")){
+            preg6.insert(data[i].nombreDestino);
+        }
+
+        if((data[i].nombreFuente.substr(data[i].nombreFuente.size()-8,data[i].nombreFuente.size()) != "reto.com" || data[i].ipDestino.substr(0,10) != "172.21.65." || data[i].nombreDestino != "-") && (data[i].ipFuente == "172.21.65.35")){
+            preg7.insert(data[i].fecha);
+        }
+
+    }
+    cout << "***************** Pregunta 1 *****************" << endl;
+    cout << "Sí, hay: " << anomalo.size() << endl;
+
+    // for (string it: anomalo){ //Pregunta 1
+    //     cout << it << endl;
+    // }
+    cout << "***************** Pregunta 2 *****************" << endl;
+    for(string it: preg2){
+        cout << it << endl;
+    }
+
+    cout << "***************** Pregunta 3 *****************" << endl;
+    cout << preg3.size() << endl;
+
+    cout << "***************** Pregunta 4 *****************" << endl;
+    for (string it: preg4){ //Pregunta 1
+        cout << it << endl;
+    }
+    cout << "***************** Pregunta 6 *****************" << endl;
+    cout << preg6.size() << endl;
+
+    cout << "***************** Pregunta 7 *****************" << endl;
+    for (string it: preg7){
+        cout << it << endl;
+        break;
+    }
+
     
 }
