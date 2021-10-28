@@ -216,7 +216,7 @@ int main(){
     //     cout << it << endl;
     // }
     cout << "***************** Pregunta 2 *****************" << endl;
-    for(string it: preg2){
+    for(auto it: preg2){
         cout << it << endl;
     }
 
@@ -224,17 +224,16 @@ int main(){
     cout << preg3.size() << endl;
 
     cout << "***************** Pregunta 4 *****************" << endl;
-    for (string it: preg4){ //Pregunta 1
+    for (auto it: preg4){ //Pregunta 1
         cout << it << endl;
     }
     cout << "***************** Pregunta 6 *****************" << endl;
     cout << preg6.size() << endl;
 
     cout << "***************** Pregunta 7 *****************" << endl;
-    for (string it: preg7){
+    for (auto it: preg7){
         cout << it << endl;
         break;
     }
-
     
 }
