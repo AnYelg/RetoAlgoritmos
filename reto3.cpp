@@ -182,6 +182,7 @@ int main(){
     unordered_set<string> preg4;
     unordered_set<string> preg6;
     unordered_set<string> preg7;
+	unordered_set<int> preg71;
 
     for(int i = 0; i< data.size(); i++){
         if(data[i].nombreFuente.substr(data[i].nombreFuente.size()-8,data[i].nombreFuente.size()) != "reto.com" || data[i].ipFuente.substr(0,10) != "172.21.65." || data[i].nombreDestino != "-"){
@@ -206,15 +207,17 @@ int main(){
 
         if((data[i].nombreFuente.substr(data[i].nombreFuente.size()-8,data[i].nombreFuente.size()) != "reto.com" || data[i].ipDestino.substr(0,10) != "172.21.65." || data[i].nombreDestino != "-") && (data[i].ipFuente == "172.21.65.35")){
             preg7.insert(data[i].fecha);
+			preg71.insert(data[i].puertoFuente);
         }
 
     }
     cout << "***************** Pregunta 1 *****************" << endl;
     cout << "Sí, hay: " << anomalo.size() << endl;
 
-    // for (string it: anomalo){ //Pregunta 1
-    //     cout << it << endl;
-    // }
+    for (string it: anomalo){ //Pregunta 1
+        cout << it << endl;
+    }
+
     cout << "***************** Pregunta 2 *****************" << endl;
     for(auto it: preg2){
         cout << it << endl;
@@ -232,6 +235,10 @@ int main(){
 
     cout << "***************** Pregunta 7 *****************" << endl;
     for (auto it: preg7){
+        cout << it << endl;
+        break;
+    }
+	for (auto it: preg71){
         cout << it << endl;
         break;
     }
