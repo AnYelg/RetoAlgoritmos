@@ -78,11 +78,9 @@ class Record
 };
 vector<Record> data;
 
-void conexionesPorDia(string f)
+unordered_map <string, int> conexionesPorDia(string f)
 {
     unordered_map <string, int> d;
-    int contador = 0;
-    cout << d.size() << endl;
 
     for(Record r: data)
     {
@@ -90,22 +88,52 @@ void conexionesPorDia(string f)
         {  
             if(r.nombreDestino != "-" && r.nombreFuente.substr(r.nombreFuente.size(),r.nombreFuente.size()-8) != "reto.com")
             {
-                contador ++;
-                d[f] = contador;
+				//Checar si ya existe
+				if(d.find(r.nombreDestino) == d.end())
+				{
+					d[r.nombreDestino] = 0;
+				}
+                d[r.nombreDestino]++;
             }
+		
         }
     }
     
-    for(auto p: d)
-    {
-        cout << p.first << "," << p.second << endl;
-    }
+    
+	// for(auto it: d)
+	// {
+	// 	cout << it.first << "," << it.second << endl;
+	// }
+	return d;
     
 }
 
 void top(int n, string f)
 {
+	unordered_map <string, int> a = conexionesPorDia(f);
+	map <int, vector <string> > m;
+	
+	for(auto it : a)
+	{
+		m[it.second].push_back(it.first);
+	}
 
+	for (auto it1 : m)
+	{
+		cout << it1.first << ":" << endl;
+		// for(string it2 : it1.first.begin())
+		// {
+		// 	cout << it2 << endl;
+		// }
+		// for (string it2 : it1.first)
+		// {
+		// 	cout << it2.first;
+		// }
+		for(auto it2 : it1.first)
+		{
+			cout << it2 << endl;
+		}
+	}
 }
 
 void cargarDatos()
@@ -137,5 +165,7 @@ void cargarDatos()
 int main()
 {
     cargarDatos();
-    conexionesPorDia("14-8-2020");
+	//conexionesPorDia("14-8-2020");
+	top(5, "14-8-2020");
+
 }
