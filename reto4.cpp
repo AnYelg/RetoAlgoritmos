@@ -2,7 +2,6 @@
 #include <unordered_map>
 #include <set>
 #include <map>
-#include <string>
 #include <fstream>
 #include <vector>
 #include <sstream>
@@ -50,31 +49,9 @@ class Record
 
 			
 		}
-		Record(string ipF,  string nF,string ipD)
-        {
-			this -> ipFuente = ipF; 
-			this -> nombreFuente = nF;
-			this -> ipDestino = ipD;	
-		}
 		
-		void imprimirRecord()
-        {
-			cout << fecha << "__" << hora << ":" << ipFuente << ":" << puertoFuente << ":" << nombreFuente <<":" << ipDestino << ":" << puertoDestino << ":" << nombreDestino << endl;
-		}
-
-		void imprimiripD()
-        {
-			cout << ipDestino << endl;
-		}
-
-		void imprimirpD()
-        {
-			cout << puertoDestino << endl;
-		}
-
-        
-	
 };
+
 vector<Record> data;
 
 unordered_map <string, int> conexionesPorDia(string f)
@@ -98,11 +75,6 @@ unordered_map <string, int> conexionesPorDia(string f)
         }
     }
     
-    
-	// for(auto it: d)
-	// {
-	// 	cout << it.first << "," << it.second << endl;
-	// }
 	return d;
     
 }
@@ -111,26 +83,22 @@ void top(int n, string f)
 {
 	unordered_map <string, int> a = conexionesPorDia(f);
 	map <int, vector <string> > m;
-	
+	int pr = 0;
+
 	for(auto it : a)
 	{
 		m[it.second].push_back(it.first);
 	}
-	int pr = 0;
+	
 	cout << "Los " << n << " sitios con más accesos en la fecha " << f << " son " << endl;
 	for(auto num = m.rbegin(); num != m.rend() && pr < n; num++, pr++)
 	{
-		
-		
 		cout << "Número de accesos: " <<num->first << " a:" << endl;
 		for(auto it2 : num->second)
 		{
 			cout << it2 << endl;
 		}
-		
 	}
-
-	
 }
 
 void cargarDatos()
@@ -155,16 +123,12 @@ void cargarDatos()
 		partes.clear();
 	}
 	in.close();
-    
-
 }
 
 int main()
 {
 	int n = 5;
     cargarDatos();
-	//conexionesPorDia("14-8-2020");
-	//top(5, "14-8-2020");
 	for(int i = 0; i < data.size(); i++)
 	{
 		if(data[i].fecha != data[i+1].fecha)
