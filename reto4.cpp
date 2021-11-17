@@ -116,23 +116,21 @@ void top(int n, string f)
 	{
 		m[it.second].push_back(it.first);
 	}
-
-	for (auto it1 : m)
+	int pr = 0;
+	cout << "Los " << n << " sitios con más accesos en la fecha " << f << " son " << endl;
+	for(auto num = m.rbegin(); num != m.rend() && pr < n; num++, pr++)
 	{
-		cout << it1.first << ":" << endl;
-		// for(string it2 : it1.first.begin())
-		// {
-		// 	cout << it2 << endl;
-		// }
-		// for (string it2 : it1.first)
-		// {
-		// 	cout << it2.first;
-		// }
-		for(auto it2 : it1.first)
+		
+		
+		cout << "Número de accesos: " <<num->first << " a:" << endl;
+		for(auto it2 : num->second)
 		{
 			cout << it2 << endl;
 		}
+		
 	}
+
+	
 }
 
 void cargarDatos()
@@ -163,8 +161,16 @@ void cargarDatos()
 
 int main()
 {
+	int n = 5;
     cargarDatos();
 	//conexionesPorDia("14-8-2020");
-	top(5, "14-8-2020");
+	//top(5, "14-8-2020");
+	for(int i = 0; i < data.size(); i++)
+	{
+		if(data[i].fecha != data[i+1].fecha)
+		{
+			top(n, data[i].fecha);
+		}
+	}
 
 }
