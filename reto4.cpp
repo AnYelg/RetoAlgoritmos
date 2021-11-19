@@ -62,7 +62,7 @@ unordered_map <string, int> conexionesPorDia(string f)
     {
         if(f == r.fecha)
         {  
-            if(r.nombreDestino != "-" && r.nombreFuente.substr(r.nombreFuente.size(),r.nombreFuente.size()-8) != "reto.com")
+            if(r.nombreDestino != "-" && r.nombreDestino.substr(r.nombreDestino.size(),r.nombreDestino.size()-8) != "reto.com")
             {
 				//Checar si ya existe
 				if(d.find(r.nombreDestino) == d.end())
