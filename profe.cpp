@@ -1,69 +1,131 @@
 #include <iostream>
-#include <fstream>
-#include <sstream>
-#include <vector>
-#include <string>
 #include <unordered_map>
+#include <set>
+#include <map>
+#include <fstream>
+#include <vector>
+#include <sstream>
 
 using namespace std;
-class Record{
+
+class Record
+{
 	public:
-	string fecha;
-	string hora;
-	string ipFuente;
-	int puertoFuente;
-	string nombreFuente;
-	string ipDestino;
-	int puertoDestino;
-	string nombreDestino;
-	
-	Record(string f, string h, string iF, string pF, string nF, string iD, string pD, string nD){
-		fecha=f;
-		hora=h;
-		ipFuente=iF;
-		if(pF=="-"){
-			puertoFuente=0;
-		}else{
+		string fecha;
+		string hora;
+		string ipFuente;
+		int puertoFuente;
+		string nombreFuente;
+		string ipDestino;
+		int puertoDestino;
+		string nombreDestino;
+		
+		Record(string f, string h, string ipF, string pF, string nF,string ipD, string pD, string nD)
+        {
+			this -> fecha = f;
+			this -> hora = h;
+			this -> ipFuente = ipF; 
+			this -> nombreFuente = nF;
+			this -> ipDestino = ipD;
+			this -> nombreDestino = nD;
+
+			if(pF == "-")
+            {
+				this -> puertoFuente = 0;
+			}
+            else
+            {
+				this -> puertoFuente = stoi(pF);
+			}
+
+			if(pD == "-")
+            {
+				this -> puertoDestino = 0;
+			}
+            else
+            {
+				this -> puertoDestino = stoi(pF);
+			}
+
 			
-			try{
-				puertoFuente=stoi(pF);
-			}catch (const std::invalid_argument& ia){
-				puertoFuente=0;
-				cout<<"error"<<pD<<endl;
-			}
 		}
-		nombreFuente=nF;
-		ipDestino=iD;
-		if(pD=="-"){
-			puertoDestino=0;
-		}else{
-			try{
-				puertoDestino=stoi(pD);
-			}catch (const std::invalid_argument& ia){
-				puertoDestino=0;
-				cout<<"error"<<pD<<endl;
-			}
-		}
-		nombreDestino=nD;
-	}
-	
-	void imprimirRecord(){
-		cout<<nombreFuente<<endl;
-	}
+		
 };
 
 vector<Record> data;
-void cargarDatos(){
+
+unordered_map <string, int> conexionesPorDia(string f)
+{
+    unordered_map <string, int> d;
+
+    for(Record r: data)
+    {
+        if(f == r.fecha)
+        {  
+			if(r.nombreDestino != "-")
+            {
+				//Checar si ya existe
+				if(d.find(r.nombreDestino) == d.end())
+				{
+					d[r.nombreDestino] = 0;
+				}
+                d[r.nombreDestino]++;
+            }
+
+			if(r.nombreDestino.size() > 8)
+			{
+				if(r.nombreDestino.substr(r.nombreDestino.size()-8, r.nombreDestino.size()) == "reto.com")
+				{
+					if(d.find(r.nombreDestino) != d.end())
+					{
+						d.erase(r.nombreDestino);
+					}	
+				}
+				
+			}
+        }
+    }
+	return d;
+    
+}
+
+void top(int n, string f)
+{
+	unordered_map <string, int> a = conexionesPorDia(f);
+	map <int, vector <string> > m;
+	int pr = 0;
+
+	for(auto it : a)
+	{
+		m[it.second].push_back(it.first);
+	}
+	
+	cout << "Los " << n << " sitios con más accesos en la fecha " << f << " son " << endl;
+	for(auto num = m.rbegin(); num != m.rend() && pr < n; num++, pr++)
+	{
+		cout << "Número de accesos: " <<num->first << " a:" << endl;
+		for(auto it2 : num->second)
+		{
+			cout << it2 << endl;
+		}
+	}
+}
+
+void cargarDatos()
+{
 	ifstream in;
 	in.open("datosEquipo5.csv");
 	string line, parte;
 	vector<string> partes;
-	while(getline(in, line)){
-		if(line.find("\r")!=line.npos){
+	while(getline(in, line))
+    {
+		if(line.find("\r")!=line.npos)
+        {
 				line=line.substr(0, line.size()-1);
 		}
 		istringstream inString(line);
-		while(getline(inString, parte, ',')){
+		while(getline(inString, parte, ','))
+        {
 			partes.push_back(parte);
 		}
 		Record r(partes[0], partes[1], partes[2], partes[3], partes[4], partes[5], partes[6], partes[7]);
@@ -71,47 +133,19 @@ void cargarDatos(){
 		partes.clear();
 	}
 	in.close();
-
 }
 
-class ConexionesComputadora{
-	public:
-	string ip;
-	vector<string> conexionesSalida;
-	
-	ConexionesComputadora(){
-		this->ip="";
-	}
-	
-	ConexionesComputadora(string ip){
-		this->ip=ip;
-	}
-	
-	void agregarSaliente(string ipDestino){
-		conexionesSalida.push_back(ipDestino);
-	}
-	
-	void imprimir(){
-		cout<<ip<<":";
-		for(string ipDestino: conexionesSalida){
-			cout<<ipDestino<<",";
+int main()
+{
+	int n = 5;
+    cargarDatos();
+	for(int i = 0; i < data.size(); i++)
+	{
+		if(data[i].fecha != data[i+1].fecha)
+		{
+			top(n, data[i].fecha);
 		}
-		cout<<endl;
 	}
-};
-
-int main(){
-	cargarDatos();
-	cout<<"Datos leidos"<<endl;
-	unordered_map<string, ConexionesComputadora> cnx;
-	for(Record r:data){
-		if(cnx.find(r.ipFuente)==cnx.end()){
-			ConexionesComputadora a(r.ipFuente);
-			cnx[r.ipFuente]=a;
-		}
-		cnx[r.ipFuente].agregarSaliente(r.ipDestino);
-	}
-	for(auto c:cnx){
-		c.second.imprimir();
-	}
+	// top(n, "18-8-2020");
+	//conexionesPorDia("18-8-2020");
 }

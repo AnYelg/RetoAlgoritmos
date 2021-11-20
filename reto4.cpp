@@ -62,7 +62,7 @@ unordered_map <string, int> conexionesPorDia(string f)
     {
         if(f == r.fecha)
         {  
-            if(r.nombreDestino != "-" && r.nombreDestino.substr(r.nombreDestino.size(),r.nombreDestino.size()-8) != "reto.com")
+            if(r.nombreDestino != "-")
             {
 				//Checar si ya existe
 				if(d.find(r.nombreDestino) == d.end())
@@ -71,6 +71,18 @@ unordered_map <string, int> conexionesPorDia(string f)
 				}
                 d[r.nombreDestino]++;
             }
+
+			if(r.nombreDestino.size() > 8)
+			{
+				if(r.nombreDestino.substr(r.nombreDestino.size()-8, r.nombreDestino.size()) == "reto.com")
+				{
+					if(d.find(r.nombreDestino) != d.end())
+					{
+						d.erase(r.nombreDestino);
+					}	
+				}
+				
+			}
 		
         }
     }
