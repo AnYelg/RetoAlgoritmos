@@ -113,10 +113,6 @@ class Grafo
 	
 	public:
 
-	//int leerSiguiente(T d){
-
-	//}
-
 	
 	void agregarNodo(T id)
 	{
@@ -144,8 +140,6 @@ class Grafo
 			it.second->imprimirNodo();
 		}
 	}
-	
-	
 };
 
 int main()
@@ -153,17 +147,33 @@ int main()
 	cargarDatos();
 
 	Grafo<string> ConexionesUno;
+	unordered_map<string, unordered_map<string, int>> conexInt;
+
+	Grafo<string> ConexionesDos;
+	unordered_map<string, unordered_map<string, int>> conexSit;
+	
 	int peso=0;
 	
-	
-	
-	string dia= "10-8-2020";
+	//Día a utilizar
 
+	//string dia = "10-8-2020";
+	//string dia = "11-8-2020";
+	//string dia = "12-8-2020";
+	//string dia = "13-8-2020";
+	//string dia = "14-8-2020";
+	string dia = "17-8-2020";
+	//string dia = "18-8-2020";
+	//string dia = "19-8-2020";
+	//string dia = "20-8-2020";
+	//string dia = "21-8-2020";
 
+	//Grafo de conexiones de red interna
 	for(auto it : data){
 		if(it.fecha == dia){
 			if(it.ipDestino.find("172.21.65.") != string::npos){
 				ConexionesUno.agregarNodo(it.ipDestino);
+				//Generar la matriz
+				conexInt[it.ipFuente][it.ipDestino] +=1;
 			}
 
 			if(it.ipFuente.find("172.21.65.") != string::npos){
@@ -174,6 +184,114 @@ int main()
 		}
 	}
 
+	for(auto it : conexInt){
+		for(auto numConexiones : it.second){
+			ConexionesUno.agregarArcoDirigidoConPeso(it.first, numConexiones.first, numConexiones.second);
+		}
+	}
+
+
+	//Grafo de conexiones de sitios web
+	for(auto elem : data){
+		if(elem.fecha == dia){
+			if(!elem.ipDestino.find("172.21.65.") != string::npos){
+				ConexionesDos.agregarNodo(elem.ipFuente);
+				//Generar la matriz
+				conexSit[elem.ipFuente][elem.ipDestino] +=1;
+
+				ConexionesDos.agregarNodo(elem.ipDestino);
+			}
+
+		ConexionesDos.agregarArcoNoDirigidoConPeso(elem.ipFuente, elem.ipDestino, peso);
+		}
+	}
+
+	for(auto elem : conexSit){
+		for(auto numConexiones : elem.second){
+			ConexionesDos.agregarArcoDirigidoConPeso(elem.first, numConexiones.first, numConexiones.second);
+		}
+	}
+
+	cout << endl;
+	/*cout << "***********************Impresión de grafo de conexiones internas realizado***********************" << endl;
+
 	ConexionesUno.imprimir();
+
+	cout << endl;
+	cout << "***********************Impresión de grafo de conexiones a sitio web realizado***********************" << endl;
+
+	ConexionesDos.imprimir();
+
+	cout << endl;*/
+
+	cout << "***********************Cantidad de conexiones internas por día***********************" << endl;
+	cout << "Día de búsqueda: " << dia << endl;
+	
+	int contador = 0;
+	for(auto j : conexInt){
+		cout << j.first << "; ";
+		contador += 1;
+	}
+	
+	cout << endl;
+	cout << "Cantidad de conexiones en el día: " << contador << endl;
+
+	
+	cout << endl;
+	cout << "***********************Cantidad de conexiones internas hacia A por día***********************" << endl;
+
+	int conexion_a = 0;
+
+	for(auto it : conexInt){
+		for(auto it2 : it.second){
+			if(it2.first == "172.21.65.54"){
+				conexion_a += 1;
+			}
+		}
+	}
+
+	cout << "Conexion de computadoras internas hacia kevin.reto.com: " << conexion_a << endl;
+
+	cout << endl;
+	cout << "***********************Cantidad de conexiones internas hacia B por día***********************" << endl;
+
+	int conexion_b_1 = 0;
+
+	for(auto it : conexSit){
+		for(auto it2 : it.second){
+			if(it2.first == "38.237.12.77"){
+				conexion_b_1 += 1;
+			}
+		}
+	}
+
+	int conexion_b_2 = 0;
+
+	for(auto it : conexSit){
+		for(auto it2 : it.second){
+			if(it2.first == "23.177.199.130"){
+				conexion_b_2 += 1;
+			}
+		}
+	}
+
+	cout << "Conexion de computadoras internas hacia bofgd2egwezcd8n3kplv.org (ip -> 38.237.12.77): " << conexion_b_1 << endl;
+	cout << "Conexion de computadoras internas hacia cmpxaw7lxdyhb63ocpgb.xxx (ip -> 23.177.199.130): " << conexion_b_2 << endl;
+
+	cout << endl;
+	cout << "***********************Cantidad de conexiones internas hacia C por día***********************" << endl;
+
+	int conexion_c = 0;
+
+	for(auto it : conexSit){
+		for(auto it2 : it.second){
+			if(it2.first == "172.21.65.54"){
+				conexion_c += 1;
+			}
+		}
+	}
+
+	cout << "Conexion de computadoras internas hacia irs.gov (ip -> 170.8.131.248): " << conexion_c << endl;
+
 
 }
