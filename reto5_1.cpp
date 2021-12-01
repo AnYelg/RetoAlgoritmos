@@ -11,10 +11,12 @@ class Nodo{
 	public:
 	T id;
 	unordered_map<Nodo<T> *, int> siguientes;
+    bool visitado;
 	
 	Nodo(T id)
 	{
 		this->id=id;
+        visitado = false;
 	}
 	
 	void agregarArcoConPeso(Nodo<T> *sig, int peso)
@@ -69,53 +71,69 @@ class Grafo
 		}
 	}
 
-    bool DFS(T nodo1, T nodo2){
-        stack<Nodo<T>*> visitar;
-        visitar.push(nodos[nodo1]);
-        Nodo<T>* temp = visitar.top();
+    void ResetVisitados(vector<Nodo<T>*> v){
+        for(int i=0; i<v.size(); i++){
+            v[i]->visitado=false;
+        }
+    }
 
-        while(!visitar.empty()){
-            if(visitar.top()->id == nodo2){
+    bool DFS(T nodo1, T nodo2){
+        stack<Nodo<T>*> pila;
+        pila.push(nodos[nodo1]);
+        Nodo<T> *temp = nodos[nodo1];
+        vector<Nodo<T> *> visitados;
+
+        while(pila.size() != 0){
+            visitados.push_back(pila.top());
+            pila.pop();
+            temp->visitado=true; //por alguna razón no me marca visitado como comentario en el constructo
+            if(temp==nodos[nodo2]){
+                ResetVisitados(visitados);
                 return true;
             }
 
-            temp = visitar.top();
-            visitar.pop();
-
-            for(auto it : temp->siguientes){
-                if(it.first->visitado == false){
-                    visitar.push(it.first);
+            else{
+                for(auto it : temp->siguientes){
+                    if(it.first->visitado == false){
+                        pila.push(it.first);
+                    }
                 }
             }
-
-            temp->visitado = true;
+            temp = pila.top();
         }
-
+        ResetVisitados(visitados);
         return false;
     }
 
-    bool BFS(T nodo_primero, T nodo_segundo){
-        queue<Nodo<T>*> visitar;
-        visitar.push(nodos[nodo_primero]);
-        Nodo<T>* temp = visitar.front();
+    bool BFS(T nodo1, T nodo2){
+        queue<Nodo<T>*> tail;
+        tail.push(nodos[nodo1]);
+        Nodo<T>* temp = nodos[nodo1];
+        vector<Nodo<T>*> visitados;
 
-        while(!visitar.empty()){
-            if(visitar.front()->id == nodo_segundo){
+        while(tail.size() != 0){
+            visitados.push_back(tail.front());
+            tail.pop();
+            
+            temp->visitado=true;
+            
+            if(temp==nodos[nodo2]){
+                ResetVisitados(visitados);
                 return true;
             }
 
-            temp = visitar.front();
-            visitar.pop();
-
-            for(auto it : temp -> siguientes){
-                if(it.first->visitado == false){
-                    visitar.push(it.first);
+            else{
+                for(auto it : temp->siguientes){
+                    if(it.first->visitado==false){
+                        tail.push(it.first);
+                    }
                 }
             }
 
-            temp->visitado = true;
+            temp=tail.front();
         }
 
+        ResetVisitados(visitados);
         return false;
     }
 
@@ -158,13 +176,13 @@ int main(){
     g.agregarArcoDirigidoConPeso("Z", "S", 9);
     g.agregarArcoDirigidoConPeso("S", "N", 2);
 
-    bool solucion = g.DFS("A", "J");
+    /*bool solucion = g.DFS("A", "J");
     if(solucion == true){
         cout << "Existe solución" << endl;
     }
     else{
         cout << "No existe solución" << endl;
-    }
+    }*/
 
 
     bool solucion2 = g.BFS("A", "J");
