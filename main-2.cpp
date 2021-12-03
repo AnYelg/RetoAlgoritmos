@@ -187,32 +187,32 @@ int main(){
   for (int i=0; i<data.size();i++){
     if((data[i].nombreFuente.substr(data[i].nombreFuente.size()-8,data[i].nombreFuente.size())=="reto.com") && 
 	(data[i].nombreDestino.size()>8) && (data[i].nombreDestino.substr(data[i].nombreDestino.size()-8,data[i].nombreDestino.size())=="reto.com") && 
-	(fecha6==data[i].fecha)){
+	(fecha7==data[i].fecha)){
 	  gInternas.agregarNodo(data[i].ipFuente);
       gInternas.agregarNodo(data[i].ipDestino);
 	  gInternas.agregarArcoDirigidoConPeso(data[i].ipFuente, data[i].ipDestino);
     }
     
-    // if((data[i].nombreFuente.substr(data[i].nombreFuente.size()-8,data[i].nombreFuente.size())=="reto.com") && 
-	// (data[i].nombreDestino.size()>8) && (data[i].nombreDestino.substr(data[i].nombreDestino.size()-8,data[i].nombreDestino.size())!="reto.com") && (data[i].nombreDestino.size()>8) && (data[i].nombreDestino.substr(data[i].nombreDestino.size()-8,data[i].nombreDestino.size())!="-") &&
-	// (fecha10==data[i].fecha)){
-	//   conexSitios.agregarNodo(data[i].ipFuente);
-    //   conexSitios.agregarNodo(data[i].ipDestino);
-	//   conexSitios.agregarArcoDirigidoConPeso(data[i].ipFuente, data[i].ipDestino);
-    // //cout<<conexSitios.DFSnuevo(data[i].ipFuente,"213.197.181.214")<<endl;
-    // }
+	if((data[i].nombreFuente.substr(data[i].nombreFuente.size()-8,data[i].nombreFuente.size())=="reto.com") && 
+	(data[i].nombreDestino.size()>8) && (data[i].nombreDestino.substr(data[i].nombreDestino.size()-8,data[i].nombreDestino.size())!="reto.com") && (data[i].nombreDestino.size()>8) && (data[i].nombreDestino.substr(data[i].nombreDestino.size()-8,data[i].nombreDestino.size())!="-") &&
+	(fecha7==data[i].fecha)){
+		conexSitios.agregarNodo(data[i].ipFuente);
+		conexSitios.agregarNodo(data[i].ipDestino);
+		conexSitios.agregarArcoDirigidoConPeso(data[i].ipFuente, data[i].ipDestino);
+    }
     
   }
 
 
   //Respuestas
-  gInternas.numeroCNX(A); //Solo sirve si A tiene conexiones siguientes, de lo contrario marca error
+  /*gInternas.numeroCNX(A); //Solo sirve si A tiene conexiones siguientes, de lo contrario marca error
   cout<<"-------------------------------------"<<endl;
   gInternas.imprimir();
   cout<<"-------------------------------------"<<endl;
   cout<<fecha10<<endl;
   conexSitios.conexB(B);
-  conexSitios.conexC(C);
+  conexSitios.conexC(C);*/
+  conexSitios.imprimir();
 
   
   

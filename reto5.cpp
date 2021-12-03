@@ -207,11 +207,11 @@ int main()
 	//string dia = "12-8-2020";
 	//string dia = "13-8-2020";
 	//string dia = "14-8-2020";
-	//string dia = "17-8-2020";
+	string dia = "17-8-2020";
 	//string dia = "18-8-2020";
 	//string dia = "19-8-2020";
 	//string dia = "20-8-2020";
-	string dia = "21-8-2020";
+	//string dia = "21-8-2020";
 
 	Grafo<string> dirInt;
 
@@ -226,26 +226,23 @@ int main()
 	  		dirInt.agregarArcoDirigidoConPeso(data[i].ipFuente, data[i].ipDestino);
     	}
     
-    	if((data[i].nombreFuente.substr(data[i].nombreFuente.size() - 8,data[i].nombreFuente.size()) == "reto.com") && 
+    	/*if((data[i].nombreFuente.substr(data[i].nombreFuente.size() - 8,data[i].nombreFuente.size()) == "reto.com") && 
 		(data[i].nombreDestino.size() > 8) && (data[i].nombreDestino.substr(data[i].nombreDestino.size() - 8,data[i].nombreDestino.size()) != "reto.com") && 
 		(data[i].nombreDestino.size() > 8) && (data[i].nombreDestino.substr(data[i].nombreDestino.size() - 8,data[i].nombreDestino.size()) != "-") &&
 		(dia == data[i].fecha)){
 		   dirSitios.agregarNodo(data[i].ipFuente);
     	   dirSitios.agregarNodo(data[i].ipDestino);
 		   dirSitios.agregarArcoDirigidoConPeso(data[i].ipFuente, data[i].ipDestino);
-    	}
+    	}*/
     
   }
 
-	cout << endl;
-	cout << "******************************Fecha de búsqueda******************************" << endl;
-	cout << "Fecha actual: " << dia << endl;
+
+	dirInt.numeroConexiones(kevin);
 
 	cout << endl;
 	cout << "******************************Cantidad de conexiones internas******************************" << endl;
 	dirInt.imprimir();
-	//cout << counter << endl;
-	dirInt.numeroConexiones(kevin);
 
 	cout << endl;
 	cout << "******************************Cantidad de conexiones hacia B******************************" << endl;
@@ -258,4 +255,6 @@ int main()
 	dirSitios.conexion_C(sitio);
 
 	cout << endl;
+
+	return 0;
 }
