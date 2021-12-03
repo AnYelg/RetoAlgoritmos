@@ -118,8 +118,13 @@ class Grafo
 	
 	void agregarNodo(T id)
 	{
-		Nodo<T> *nuevo=new Nodo<T>(id);
-		nodos[id]=nuevo;
+		if(nodos.find(id) != nodos.end()){
+
+		}
+		else{
+			Nodo<T> *nuevo=new Nodo<T>(id);
+			nodos[id]=nuevo;
+		}
 	}
 	
 	void agregarArcoDirigidoConPeso(T fuente, T destino){
