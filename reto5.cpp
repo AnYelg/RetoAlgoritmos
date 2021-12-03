@@ -157,15 +157,15 @@ int main()
 	//Día a utilizar
 
 	//string dia = "10-8-2020";
-	//string dia = "11-8-2020";
+	//tring dia = "11-8-2020";
 	//string dia = "12-8-2020";
 	//string dia = "13-8-2020";
 	//string dia = "14-8-2020";
-	string dia = "17-8-2020";
+	//string dia = "17-8-2020";
 	//string dia = "18-8-2020";
 	//string dia = "19-8-2020";
 	//string dia = "20-8-2020";
-	//string dia = "21-8-2020";
+	string dia = "21-8-2020";
 
 	//Grafo de conexiones de red interna
 	for(auto it : data){
