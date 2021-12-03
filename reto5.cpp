@@ -238,10 +238,11 @@ int main()
   }
 
 
-	dirInt.numeroConexiones(kevin);
+	
 
 	cout << endl;
 	cout << "******************************Cantidad de conexiones internas******************************" << endl;
+	dirInt.numeroConexiones(kevin);
 	dirInt.imprimir();
 
 	cout << endl;

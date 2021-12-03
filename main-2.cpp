@@ -205,14 +205,13 @@ int main(){
 
 
   //Respuestas
-  /*gInternas.numeroCNX(A); //Solo sirve si A tiene conexiones siguientes, de lo contrario marca error
+  gInternas.numeroCNX(A); //Solo sirve si A tiene conexiones siguientes, de lo contrario marca error
   cout<<"-------------------------------------"<<endl;
   gInternas.imprimir();
   cout<<"-------------------------------------"<<endl;
-  cout<<fecha10<<endl;
+  cout<<fecha7<<endl;
   conexSitios.conexB(B);
-  conexSitios.conexC(C);*/
-  conexSitios.imprimir();
+  conexSitios.conexC(C);
 
   
   
