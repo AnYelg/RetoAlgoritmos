@@ -206,12 +206,12 @@ int main()
 	
 	//Día a utilizar
 
-	string dia = "10-8-2020";
+	//string dia = "10-8-2020";
 	//tring dia = "11-8-2020";
 	//string dia = "12-8-2020";
 	//string dia = "13-8-2020";
 	//string dia = "14-8-2020";
-	//string dia = "17-8-2020";
+	string dia = "17-8-2020";
 	//string dia = "18-8-2020";
 	//string dia = "19-8-2020";
 	//string dia = "20-8-2020";
@@ -223,39 +223,39 @@ int main()
 	
 	
 
-	// for(int i = 0; i < data.size(); i++){
-	// 	if(data[i].nombreFuente.substr(data[i].nombreFuente.size() - 8, data[i].nombreFuente.size()) == "reto.com")
-	// 	{
-	// 		if (data[i].nombreDestino.size() > 8)
-	// 		{
-	// 			if ((data[i].nombreDestino.substr(data[i].nombreDestino.size() - 8, data[i].nombreDestino.size()) == "reto.com") && (dia == data[i].fecha))
-	// 			{
-	// 				dirInt.agregarNodo(data[i].ipFuente);
-	// 				dirInt.agregarNodo(data[i].ipDestino);
-	// 				dirInt.agregarArcoDirigidoConPeso(data[i].ipFuente, data[i].ipDestino);
-	// 			}
+	for(int i = 0; i < data.size(); i++){
+		if(data[i].nombreFuente.substr(data[i].nombreFuente.size() - 8, data[i].nombreFuente.size()) == "reto.com")
+		{
+			if (data[i].nombreDestino.size() > 8)
+			{
+				if ((data[i].nombreDestino.substr(data[i].nombreDestino.size() - 8, data[i].nombreDestino.size()) == "reto.com") && (dia == data[i].fecha))
+				{
+					dirInt.agregarNodo(data[i].ipFuente);
+					dirInt.agregarNodo(data[i].ipDestino);
+					dirInt.agregarArcoDirigidoConPeso(data[i].ipFuente, data[i].ipDestino);
+				}
 			
+			}
+		}
+	}
+
+	// for (int i=0; i<data.size();i++)
+	// {
+	// 	if(data[i].fecha == dia)
+	// 	{
+	// 		if(data[i].ipFuente == kevin)
+	// 		{
+	// 			dirInt.agregarNodo(data[i].ipFuente);
+				
 	// 		}
+	// 		else if(data[i].ipDestino == kevin)
+	// 		{
+	// 			dirInt.agregarNodo(data[i].ipDestino);
+	// 		}
+
+	// 		dirInt.agregarArcoDirigidoConPeso(data[i].ipFuente, data[i].ipDestino);
 	// 	}
 	// }
-
-	/*for (int i=0; i<data.size();i++)
-	{
-		if(data[i].fecha == dia)
-		{
-			if(data[i].ipFuente == kevin)
-			{
-				dirInt.agregarNodo(data[i].ipFuente);
-				
-			}
-			else if(data[i].ipDestino == kevin)
-			{
-				dirInt.agregarNodo(data[i].ipDestino);
-			}
-
-			dirInt.agregarArcoDirigidoConPeso(data[i].ipFuente, data[i].ipDestino);
-		}
-	}*/
 	
 
 	// 	else if((data[i].nombreFuente.substr(data[i].nombreFuente.size() - 8, data[i].nombreFuente.size()) == "reto.com") && 
@@ -282,12 +282,12 @@ int main()
 	cout << endl;
 	cout << "******************************Cantidad de conexiones hacia B******************************" << endl;
 	
-	//dirSitios.conexion_B(anomalo);
+	dirSitios.conexion_B(anomalo);
 
 	cout << endl;
 	cout << "******************************Cantidad de conexiones hacia C******************************" << endl;
 	
-	//dirSitios.conexion_C(sitio);
+	dirSitios.conexion_C(sitio);
 
 	cout << endl;
 }

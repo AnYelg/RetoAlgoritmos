@@ -187,20 +187,20 @@ int main(){
   for (int i=0; i<data.size();i++){
     if((data[i].nombreFuente.substr(data[i].nombreFuente.size()-8,data[i].nombreFuente.size())=="reto.com") && 
 	(data[i].nombreDestino.size()>8) && (data[i].nombreDestino.substr(data[i].nombreDestino.size()-8,data[i].nombreDestino.size())=="reto.com") && 
-	(fecha4==data[i].fecha)){
+	(fecha6==data[i].fecha)){
 	  gInternas.agregarNodo(data[i].ipFuente);
       gInternas.agregarNodo(data[i].ipDestino);
 	  gInternas.agregarArcoDirigidoConPeso(data[i].ipFuente, data[i].ipDestino);
     }
     
-    if((data[i].nombreFuente.substr(data[i].nombreFuente.size()-8,data[i].nombreFuente.size())=="reto.com") && 
-	(data[i].nombreDestino.size()>8) && (data[i].nombreDestino.substr(data[i].nombreDestino.size()-8,data[i].nombreDestino.size())!="reto.com") && (data[i].nombreDestino.size()>8) && (data[i].nombreDestino.substr(data[i].nombreDestino.size()-8,data[i].nombreDestino.size())!="-") &&
-	(fecha10==data[i].fecha)){
-	  conexSitios.agregarNodo(data[i].ipFuente);
-      conexSitios.agregarNodo(data[i].ipDestino);
-	  conexSitios.agregarArcoDirigidoConPeso(data[i].ipFuente, data[i].ipDestino);
-    //cout<<conexSitios.DFSnuevo(data[i].ipFuente,"213.197.181.214")<<endl;
-    }
+    // if((data[i].nombreFuente.substr(data[i].nombreFuente.size()-8,data[i].nombreFuente.size())=="reto.com") && 
+	// (data[i].nombreDestino.size()>8) && (data[i].nombreDestino.substr(data[i].nombreDestino.size()-8,data[i].nombreDestino.size())!="reto.com") && (data[i].nombreDestino.size()>8) && (data[i].nombreDestino.substr(data[i].nombreDestino.size()-8,data[i].nombreDestino.size())!="-") &&
+	// (fecha10==data[i].fecha)){
+	//   conexSitios.agregarNodo(data[i].ipFuente);
+    //   conexSitios.agregarNodo(data[i].ipDestino);
+	//   conexSitios.agregarArcoDirigidoConPeso(data[i].ipFuente, data[i].ipDestino);
+    // //cout<<conexSitios.DFSnuevo(data[i].ipFuente,"213.197.181.214")<<endl;
+    // }
     
   }
 
