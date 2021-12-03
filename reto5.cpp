@@ -160,10 +160,11 @@ class Grafo
 			}
 		}
 
-		cout << "Cantidad de conexiones a " << direccion << ": " << cantidad << endl;
+		//cout << "Cantidad de conexiones a " << direccion << ": " << cantidad << endl;
+		//return cantidad;
 	}
 
-	void conexion_B(T b){
+	int conexion_B(T b){
 		int counter = 0;
 
 		for(auto nod : nodos){
@@ -174,10 +175,11 @@ class Grafo
 			}
 		}
 
-		cout << "Cantidad de conexiones a B: " << counter << endl;
+		//cout << "Cantidad de conexiones a B: " << counter << endl;
+		return counter;
 	}
 
-	void conexion_C(T c){
+	int conexion_C(T c){
 		int counter = 0;
 
 		for(auto nod : nodos){
@@ -188,7 +190,9 @@ class Grafo
 			}
 		}
 
-		cout << "Cantidad de conexiones a C: " << counter << endl;
+		//cout << "Cantidad de conexiones a C: " << counter << endl;
+
+		return counter;
 	}
 };
 
@@ -216,27 +220,54 @@ int main()
 	Grafo<string> dirInt;
 
 	Grafo<string> dirSitios;
+	
+	
 
-	for(int i = 0; i < data.size(); i++){
-		if((data[i].nombreFuente.substr(data[i].nombreFuente.size() - 8, data[i].nombreFuente.size()) == "reto.com") && 
-	(data[i].nombreDestino.size() > 8) && (data[i].nombreDestino.substr(data[i].nombreDestino.size() - 8, data[i].nombreDestino.size()) == "reto.com") && 
-	(dia == data[i].fecha)){
-			dirInt.agregarNodo(data[i].ipFuente);
-			dirInt.agregarNodo(data[i].ipDestino);
+	// for(int i = 0; i < data.size(); i++){
+	// 	if(data[i].nombreFuente.substr(data[i].nombreFuente.size() - 8, data[i].nombreFuente.size()) == "reto.com")
+	// 	{
+	// 		if (data[i].nombreDestino.size() > 8)
+	// 		{
+	// 			if ((data[i].nombreDestino.substr(data[i].nombreDestino.size() - 8, data[i].nombreDestino.size()) == "reto.com") && (dia == data[i].fecha))
+	// 			{
+	// 				dirInt.agregarNodo(data[i].ipFuente);
+	// 				dirInt.agregarNodo(data[i].ipDestino);
+	// 				dirInt.agregarArcoDirigidoConPeso(data[i].ipFuente, data[i].ipDestino);
+	// 			}
+			
+	// 		}
+	// 	}
+	// }
+
+	/*for (int i=0; i<data.size();i++)
+	{
+		if(data[i].fecha == dia)
+		{
+			if(data[i].ipFuente == kevin)
+			{
+				dirInt.agregarNodo(data[i].ipFuente);
+				
+			}
+			else if(data[i].ipDestino == kevin)
+			{
+				dirInt.agregarNodo(data[i].ipDestino);
+			}
 
 			dirInt.agregarArcoDirigidoConPeso(data[i].ipFuente, data[i].ipDestino);
 		}
+	}*/
+	
 
-		else if((data[i].nombreFuente.substr(data[i].nombreFuente.size() - 8, data[i].nombreFuente.size()) == "reto.com") && 
-	(data[i].nombreDestino.size() > 8) && (data[i].nombreDestino.substr(data[i].nombreDestino.size() - 8, data[i].nombreDestino.size()) != "reto.com") && 
-	(data[i].nombreDestino.size()>8) && (data[i].nombreDestino.substr(data[i].nombreDestino.size()-8,data[i].nombreDestino.size())!="-") &&
-	(dia == data[i].fecha)){
-			dirSitios.agregarNodo(data[i].ipFuente);
-			dirSitios.agregarNodo(data[i].ipDestino);
+	// 	else if((data[i].nombreFuente.substr(data[i].nombreFuente.size() - 8, data[i].nombreFuente.size()) == "reto.com") && 
+	// (data[i].nombreDestino.size() > 8) && (data[i].nombreDestino.substr(data[i].nombreDestino.size() - 8, data[i].nombreDestino.size()) != "reto.com") && 
+	// (data[i].nombreDestino.size()>8) && (data[i].nombreDestino.substr(data[i].nombreDestino.size()-8,data[i].nombreDestino.size())!="-") &&
+	// (dia == data[i].fecha)){
+	// 		dirSitios.agregarNodo(data[i].ipFuente);
+	// 		dirSitios.agregarNodo(data[i].ipDestino);
 
-			dirSitios.agregarArcoDirigidoConPeso(data[i].ipFuente, data[i].ipDestino);
-		}
-	}
+	// 		dirSitios.agregarArcoDirigidoConPeso(data[i].ipFuente, data[i].ipDestino);
+	// 	}
+	// }
 
 	
 	cout << endl;
@@ -251,12 +282,12 @@ int main()
 	cout << endl;
 	cout << "******************************Cantidad de conexiones hacia B******************************" << endl;
 	
-	dirSitios.conexion_B(anomalo);
+	//dirSitios.conexion_B(anomalo);
 
 	cout << endl;
 	cout << "******************************Cantidad de conexiones hacia C******************************" << endl;
 	
-	dirSitios.conexion_C(sitio);
+	//dirSitios.conexion_C(sitio);
 
 	cout << endl;
 }

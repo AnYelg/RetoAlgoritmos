@@ -44,7 +44,7 @@ class Record{
 vector<Record> data;
 void cargarDatos(string path){
 	ifstream in;
-	in.open("datosEquipo5.csv");
+	in.open(path);
 	string line, parte;
 	vector<string> partes;
 	while(getline(in, line)){
@@ -167,7 +167,7 @@ class Grafo{
 
 
 int main(){
-  cargarDatos("datosEquipo2.csv");
+  cargarDatos("datosEquipo5.csv");
   string fecha1="10-8-2020";
   string fecha2="11-8-2020";
   string fecha3="12-8-2020";
@@ -178,9 +178,9 @@ int main(){
   string fecha8="19-8-2020";
   string fecha9="20-8-2020";
   string fecha10="21-8-2020";
-  string A="172.24.133.84"; //Computadora de debra, que se conecta a otras internas
-  string B="213.197.181.214"; // Sitio con nombre anomala
-  string C="68.76.127.243";// Ip de bank of america
+  string A="172.21.65.54"; //Computadora de debra, que se conecta a otras internas
+  string B="23.177.199.130"; // Sitio con nombre anomala
+  string C="170.8.131.248";// Ip de bank of america
   //Preeguntas 1, 2, 3, 4
   Grafo<string> gInternas; //Grafo Internas
   Grafo<string> conexSitios; //Grafo a sitios web
