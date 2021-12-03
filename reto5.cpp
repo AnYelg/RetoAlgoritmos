@@ -82,11 +82,13 @@ template <class T>
 class Nodo{
 	public:
 	T id;
+	bool visitado;
 	unordered_map<Nodo<T> *, int> siguientes;
 	
 	Nodo(T id)
 	{
 		this->id=id;
+		visitado=false;
 	}
 	
 	void agregarArcoConPeso(Nodo<T> *sig, int peso)
@@ -120,18 +122,10 @@ class Grafo
 		nodos[id]=nuevo;
 	}
 	
-	void agregarArcoDirigidoConPeso(T fuente, T destino, int peso)
-	{
-		if(nodos.find(fuente)!=nodos.end() && nodos.find(destino)!=nodos.end())
-		{
-			nodos[fuente]->agregarArcoConPeso(nodos[destino], peso);
-		}
-	}
-	
-	void agregarArcoNoDirigidoConPeso(T fuente, T destino, int peso)
-	{
-		agregarArcoDirigidoConPeso(fuente, destino, peso);
-		agregarArcoDirigidoConPeso(destino, fuente, peso);
+	void agregarArcoDirigidoConPeso(T fuente, T destino){
+		int nuevoPeso = calcularNuevoPeso(nodos[fuente], nodos[destino]);
+
+		nodos[fuente]->agregarArcoConPeso(nodos[destino], nuevoPeso);
 	}
 	
 	void imprimir()
@@ -140,23 +134,75 @@ class Grafo
 			it.second->imprimirNodo();
 		}
 	}
+
+	int calcularNuevoPeso(Nodo<T> *fuente, Nodo<T> *destino){
+		for(auto it = fuente->siguientes.begin(); it != fuente->siguientes.end(); it++){
+			if(it->first->id == destino->id){
+				int peso = it->second;
+				peso++;
+				
+				return peso;
+			}
+		}
+
+		return 1;
+	}
+
+	void numeroConexiones(T fuente){
+		cout << nodos[fuente]->siguientes.size() << endl;
+		int cantidad = 0;
+		string direccion;
+
+		for(auto it : nodos[fuente]->siguientes){
+			if(it.second > cantidad){
+				cantidad = it.second;
+				direccion = it.first->id;
+			}
+		}
+
+		cout << "Cantidad de conexiones a " << direccion << ": " << cantidad << endl;
+	}
+
+	void conexion_B(T b){
+		int counter = 0;
+
+		for(auto nod : nodos){
+			for(auto sig : nodos[nod.first]->siguientes){
+				if(sig.first->id == b){
+					counter++;
+				}
+			}
+		}
+
+		cout << "Cantidad de conexiones a B: " << counter << endl;
+	}
+
+	void conexion_C(T c){
+		int counter = 0;
+
+		for(auto nod : nodos){
+			for(auto sig : nodos[nod.first]->siguientes){
+				if(sig.first->id == c){
+					counter++;
+				}
+			}
+		}
+
+		cout << "Cantidad de conexiones a C: " << counter << endl;
+	}
 };
 
 int main()
 {
 	cargarDatos();
 
-	Grafo<string> ConexionesUno;
-	unordered_map<string, unordered_map<string, int>> conexInt;
-
-	Grafo<string> ConexionesDos;
-	unordered_map<string, unordered_map<string, int>> conexSit;
-	
-	int peso=0;
+	string kevin = "172.21.65.54";
+	string anomalo = "23.177.199.130";
+	string sitio = "170.8.131.248";
 	
 	//Día a utilizar
 
-	//string dia = "10-8-2020";
+	string dia = "10-8-2020";
 	//tring dia = "11-8-2020";
 	//string dia = "12-8-2020";
 	//string dia = "13-8-2020";
@@ -165,133 +211,52 @@ int main()
 	//string dia = "18-8-2020";
 	//string dia = "19-8-2020";
 	//string dia = "20-8-2020";
-	string dia = "21-8-2020";
+	//string dia = "21-8-2020";
 
-	//Grafo de conexiones de red interna
-	for(auto it : data){
-		if(it.fecha == dia){
-			if(it.ipDestino.find("172.21.65.") != string::npos){
-				ConexionesUno.agregarNodo(it.ipDestino);
-				//Generar la matriz
-				conexInt[it.ipFuente][it.ipDestino] +=1;
-			}
+	Grafo<string> dirInt;
 
-			if(it.ipFuente.find("172.21.65.") != string::npos){
-				ConexionesUno.agregarNodo(it.ipFuente);
-			}
+	Grafo<string> dirSitios;
 
-		ConexionesUno.agregarArcoNoDirigidoConPeso(it.ipFuente, it.ipDestino, peso);
+	for(int i = 0; i < data.size(); i++){
+		if((data[i].nombreFuente.substr(data[i].nombreFuente.size() - 8, data[i].nombreFuente.size()) == "reto.com") && 
+	(data[i].nombreDestino.size() > 8) && (data[i].nombreDestino.substr(data[i].nombreDestino.size() - 8, data[i].nombreDestino.size()) == "reto.com") && 
+	(dia == data[i].fecha)){
+			dirInt.agregarNodo(data[i].ipFuente);
+			dirInt.agregarNodo(data[i].ipDestino);
+
+			dirInt.agregarArcoDirigidoConPeso(data[i].ipFuente, data[i].ipDestino);
+		}
+
+		else if((data[i].nombreFuente.substr(data[i].nombreFuente.size() - 8, data[i].nombreFuente.size()) == "reto.com") && 
+	(data[i].nombreDestino.size() > 8) && (data[i].nombreDestino.substr(data[i].nombreDestino.size() - 8, data[i].nombreDestino.size()) != "reto.com") && 
+	(data[i].nombreDestino.size()>8) && (data[i].nombreDestino.substr(data[i].nombreDestino.size()-8,data[i].nombreDestino.size())!="-") &&
+	(dia == data[i].fecha)){
+			dirSitios.agregarNodo(data[i].ipFuente);
+			dirSitios.agregarNodo(data[i].ipDestino);
+
+			dirSitios.agregarArcoDirigidoConPeso(data[i].ipFuente, data[i].ipDestino);
 		}
 	}
-
-	for(auto it : conexInt){
-		for(auto numConexiones : it.second){
-			ConexionesUno.agregarArcoDirigidoConPeso(it.first, numConexiones.first, numConexiones.second);
-		}
-	}
-
-
-	//Grafo de conexiones de sitios web
-	for(auto elem : data){
-		if(elem.fecha == dia){
-			if(!elem.ipDestino.find("172.21.65.") != string::npos){
-				ConexionesDos.agregarNodo(elem.ipFuente);
-				//Generar la matriz
-				conexSit[elem.ipFuente][elem.ipDestino] +=1;
-
-				ConexionesDos.agregarNodo(elem.ipDestino);
-			}
-
-		ConexionesDos.agregarArcoNoDirigidoConPeso(elem.ipFuente, elem.ipDestino, peso);
-		}
-	}
-
-	for(auto elem : conexSit){
-		for(auto numConexiones : elem.second){
-			ConexionesDos.agregarArcoDirigidoConPeso(elem.first, numConexiones.first, numConexiones.second);
-		}
-	}
-
-	cout << endl;
-	/*cout << "***********************Impresión de grafo de conexiones internas realizado***********************" << endl;
-
-	ConexionesUno.imprimir();
-
-	cout << endl;
-	cout << "***********************Impresión de grafo de conexiones a sitio web realizado***********************" << endl;
-
-	ConexionesDos.imprimir();
-
-	cout << endl;*/
-
-	cout << "***********************Cantidad de conexiones internas por día***********************" << endl;
-	cout << "Día de búsqueda: " << dia << endl;
-	
-	int contador = 0;
-	for(auto j : conexInt){
-		cout << j.first << "; ";
-		contador += 1;
-	}
-	
-	cout << endl;
-	cout << "Cantidad de conexiones en el día: " << contador << endl;
 
 	
 	cout << endl;
-	cout << "***********************Cantidad de conexiones internas hacia A por día***********************" << endl;
-
-	int conexion_a = 0;
-
-	for(auto it : conexInt){
-		for(auto it2 : it.second){
-			if(it2.first == "172.21.65.54"){
-				conexion_a += 1;
-			}
-		}
-	}
-
-	cout << "Conexion de computadoras internas hacia kevin.reto.com: " << conexion_a << endl;
+	cout << "******************************Fecha de búsqueda******************************" << endl;
+	cout << "Fecha actual: " << dia << endl;
 
 	cout << endl;
-	cout << "***********************Cantidad de conexiones internas hacia B por día***********************" << endl;
-
-	int conexion_b_1 = 0;
-
-	for(auto it : conexSit){
-		for(auto it2 : it.second){
-			if(it2.first == "38.237.12.77"){
-				conexion_b_1 += 1;
-			}
-		}
-	}
-
-	int conexion_b_2 = 0;
-
-	for(auto it : conexSit){
-		for(auto it2 : it.second){
-			if(it2.first == "23.177.199.130"){
-				conexion_b_2 += 1;
-			}
-		}
-	}
-
-	cout << "Conexion de computadoras internas hacia bofgd2egwezcd8n3kplv.org (ip -> 38.237.12.77): " << conexion_b_1 << endl;
-	cout << "Conexion de computadoras internas hacia cmpxaw7lxdyhb63ocpgb.xxx (ip -> 23.177.199.130): " << conexion_b_2 << endl;
+	cout << "******************************Cantidad de conexiones internas******************************" << endl;
+	
+	dirInt.numeroConexiones(kevin);
 
 	cout << endl;
-	cout << "***********************Cantidad de conexiones internas hacia C por día***********************" << endl;
+	cout << "******************************Cantidad de conexiones hacia B******************************" << endl;
+	
+	dirSitios.conexion_B(anomalo);
 
-	int conexion_c = 0;
+	cout << endl;
+	cout << "******************************Cantidad de conexiones hacia C******************************" << endl;
+	
+	dirSitios.conexion_C(sitio);
 
-	for(auto it : conexSit){
-		for(auto it2 : it.second){
-			if(it2.first == "172.21.65.54"){
-				conexion_c += 1;
-			}
-		}
-	}
-
-	cout << "Conexion de computadoras internas hacia irs.gov (ip -> 170.8.131.248): " << conexion_c << endl;
-
-
+	cout << endl;
 }

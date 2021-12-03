@@ -44,7 +44,7 @@ class Record{
 vector<Record> data;
 void cargarDatos(string path){
 	ifstream in;
-	in.open(path);
+	in.open("datosEquipo5.csv");
 	string line, parte;
 	vector<string> partes;
 	while(getline(in, line)){
