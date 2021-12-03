@@ -226,14 +226,14 @@ int main()
 	  		dirInt.agregarArcoDirigidoConPeso(data[i].ipFuente, data[i].ipDestino);
     	}
     
-    	/*if((data[i].nombreFuente.substr(data[i].nombreFuente.size() - 8,data[i].nombreFuente.size()) == "reto.com") && 
+    	if((data[i].nombreFuente.substr(data[i].nombreFuente.size() - 8,data[i].nombreFuente.size()) == "reto.com") && 
 		(data[i].nombreDestino.size() > 8) && (data[i].nombreDestino.substr(data[i].nombreDestino.size() - 8,data[i].nombreDestino.size()) != "reto.com") && 
 		(data[i].nombreDestino.size() > 8) && (data[i].nombreDestino.substr(data[i].nombreDestino.size() - 8,data[i].nombreDestino.size()) != "-") &&
 		(dia == data[i].fecha)){
 		   dirSitios.agregarNodo(data[i].ipFuente);
     	   dirSitios.agregarNodo(data[i].ipDestino);
 		   dirSitios.agregarArcoDirigidoConPeso(data[i].ipFuente, data[i].ipDestino);
-    	}*/
+    	}
     
   }
 
